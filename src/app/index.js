@@ -1,6 +1,6 @@
 import { render } from './render';
 import configureStore from '../store/index.dev';
-import { createEmailInput } from '../email/email';
+import { addEmailEditor } from '../email/email';
 
 const store = configureStore({});
 
@@ -12,5 +12,5 @@ window.onload = () => {
         console.error(`Unable to find element by id: ${EMAIL_INPUT_ID}`);
         return;
     }
-    createEmailInput(emailInputContainer);
+    addEmailEditor(emailInputContainer);
 };
