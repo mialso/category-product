@@ -1,8 +1,9 @@
 import { render } from './render';
 import configureStore from '../store/index.dev';
-import { addEmailEditor } from '../email/email';
 
 const store = configureStore({});
+
+const { addEmailEditor } = window.EmailEditor;
 
 const EMAIL_INPUT_ID = 'email_input';
 window.onload = () => {
