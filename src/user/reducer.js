@@ -1,9 +1,8 @@
 import {
-    USER_SIGNUP, READ_USER, SET_USER, USER_LOGIN_API,
-    READ_USER_API, USER_LOGOUT,
+    USER_SIGNUP, READ_USER, SET_USER,
 } from './action';
 import {
-    NOT_ASKED, ASKED, LOADING, READY, ERROR,
+    NOT_ASKED, ASKED, READY,
 } from './constants';
 
 /*
@@ -32,27 +31,6 @@ export function userReducer(state = initState, action = {}) {
         case SET_USER: {
             return {
                 currentUser: action.payload,
-                dataStatus: READY,
-            };
-        }
-        case `${READ_USER_API}_START`:
-        case `${USER_LOGIN_API}_START`: {
-            return {
-                ...state,
-                dataStatus: LOADING,
-            };
-        }
-        case `${READ_USER_API}_FAIL`:
-        case `${USER_LOGIN_API}_FAIL`: {
-            return {
-                ...state,
-                dataStatus: ERROR,
-            };
-        }
-        case `${READ_USER_API}_SUCCESS`:
-        case `${USER_LOGIN_API}_SUCCESS`: {
-            return {
-                ...state,
                 dataStatus: READY,
             };
         }

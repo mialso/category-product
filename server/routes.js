@@ -1,14 +1,12 @@
 const { findUserByName, checkUserName, generateJwt } = require('./user');
 const { verifyToken } = require('./auth');
 
-const TIMEOUT = 2000;
-
 function initRoutes(app) {
     app.get(
         '/api/user/me',
         [ verifyToken ],
         (req, res) => findUserByName(req.userName)
-            .then((user) => setTimeout(() => res.status(200).send(user), TIMEOUT)),
+            .then((user) => res.status(200).send(user)),
     );
     app.get(
         '/api/user/login',

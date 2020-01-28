@@ -2,21 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-// import ConnectedUserLogin from '../user/login';
-import ConnectedContent from './content';
-
-import './style.css';
-
-const title = 'ract updated render';
+import { App } from './app';
 
 export function render(store) {
     ReactDOM.render(
         <Provider store={store}>
-            <div className="Title">
-                {title}
-                <div>yooo</div>
-            </div>
-            <ConnectedContent />
+            <App />
         </Provider>,
         document.getElementById('app'),
     );

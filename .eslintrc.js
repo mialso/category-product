@@ -11,6 +11,7 @@ module.exports = {
         "react/jsx-indent": ["error", 4],
         "react/jsx-indent-props": ["error", 4],
         "import/no-unresolved": "off",
-        "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }]
+        "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }],
+        "jsx-a11y/label-has-associated-control": "off",
     },
 };

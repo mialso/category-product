@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { userLogin, userLogout } from './action';
+import { currentUser } from './selector';
+import { withRegularUser, withGuestUser } from './remote';
 
-export const UserLogin = ({ runUserLogin }) => {
+import './login.css';
+
+export const Login = ({ runUserLogin }) => {
     const [ name, setName ] = useState('');
     return (
-        <div>
+        <div className="Login">
+            <label>
+                Please, enter your name:
+            </label>
             <input
+                className="Login-Input"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
             <button
+                className="Login-Button"
                 type="button"
                 disabled={!name}
                 onClick={() => runUserLogin(name)}
@@ -22,21 +32,28 @@ export const UserLogin = ({ runUserLogin }) => {
     );
 };
 
-export const UserLogout = ({ runUserLogout }) => {
+export const Menu = ({ user, runUserLogout }) => {
     return (
-        <button
-            type="button"
-            onClick={() => runUserLogout()}
-        >
-            Logout
-        </button>
+        <div className="UserMenu">
+            <span>Content for:</span>
+            <b>{user.name}</b>
+            <button
+                className="UserMenu-Logout"
+                type="button"
+                onClick={() => runUserLogout()}
+            >
+                Logout
+            </button>
+        </div>
     );
 };
 
-export const ConnectedUserLogin = connect(
-    null, { runUserLogin: userLogin },
-)(UserLogin);
+export const UserLogin = compose(
+    withGuestUser,
+    connect(null, { runUserLogin: userLogin }),
+)(Login);
 
-export const ConnectedUserLogout = connect(
-    null, { runUserLogout: userLogout },
-)(UserLogout);
+export const UserMenu = compose(
+    withRegularUser,
+    connect(currentUser, { runUserLogout: userLogout }),
+)(Menu);

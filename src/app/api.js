@@ -8,19 +8,37 @@ export const SUCCESS = '_SUCCESS';
 export const FAIL = '_FAIL';
 
 const BASE_URL = '';
+const TIMEOUT = 1000;
 
-export const apiStart = (base) => ({ type: `${base.type}_START` });
+export const apiStart = (base) => ({
+    type: `${base.type}_START`,
+    meta: {
+        apiStatus: START,
+        model: base.meta.model,
+    },
+});
 export const apiSuccess = (base, payload) => ({
     type: `${base.type}_SUCCESS`,
     payload,
+    meta: {
+        apiStatus: SUCCESS,
+        model: base.meta.model,
+    },
 });
 export const apiFail = (base, error) => ({
     type: `${base.type}_FAIL`,
-    payload: error,
+    error,
+    meta: {
+        apiStatus: FAIL,
+        model: base.meta.model,
+    },
 });
 
 export const handleJson = (response) => {
     if (!response.ok) {
+        if (response.json) {
+            return response.json().then((jsonError) => Promise.reject(new Error(jsonError.error)));
+        }
         return Promise.reject(new Error(RESPONSE_NOT_OK));
     }
     return response.json().then(
@@ -51,8 +69,8 @@ export const api = ({ dispatch }, message) => {
         BASE_URL + endpoint,
         { headers: getJsonAuthHeaders(token) },
     ).then(
-        (data) => dispatch(apiSuccess(message, data)),
-        (error) => dispatch(apiFail(message, error.message)),
+        (data) => setTimeout(() => dispatch(apiSuccess(message, data)), TIMEOUT),
+        (error) => setTimeout(() => dispatch(apiFail(message, error.message)), TIMEOUT),
     );
     dispatch(apiStart(message));
 };

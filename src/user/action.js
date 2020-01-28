@@ -8,6 +8,8 @@ export const READ_USER_API = 'READ_USER_API';
 export const SET_USER = 'SET_USER';
 export const CREATE_USER = 'CREATE_USER';
 
+export const USER_MODEL = 'user';
+
 export const userLogin = (name) => ({
     type: USER_LOGIN,
     payload: name,
@@ -18,6 +20,7 @@ export const userLoginApi = (name) => ({
     meta: {
         callApi: true,
         endpoint: `/api/user/login?name=${name}`,
+        model: 'user',
     },
 });
 export const readUser = () => ({ type: READ_USER });
@@ -27,6 +30,7 @@ export const readUserApi = (token) => ({
         callApi: true,
         endpoint: '/api/user/me',
         token,
+        model: 'user',
     },
 });
 export const setUser = (user) => ({
