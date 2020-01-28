@@ -7,7 +7,7 @@ export const START = '_START';
 export const SUCCESS = '_SUCCESS';
 export const FAIL = '_FAIL';
 
-const BASE_URL = '//localhost:5005';
+const BASE_URL = '';
 
 export const apiStart = (base) => ({ type: `${base.type}_START` });
 export const apiSuccess = (base, payload) => ({
