@@ -1,0 +1,7 @@
+categories: !!seq
+    - !!map { name: outer, ? parent, ver: 1 }
+    - !!map { name: inner, ? parent, ver: 1 }
+    - !!map { name: one, parent: outer, ver: 1 }
+    - !!map { name: two, parent: outer, ver: 1 }
+    - !!map { name: inner, ? parent, ver: 2 }
+    - !!map { name: outer, ? parent, ver: 2 }

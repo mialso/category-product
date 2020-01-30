@@ -48,6 +48,7 @@ export const handleJson = (response) => {
 };
 
 export const getJsonAuthHeaders = (token) => ({
+    Accept: 'application/json',
     'Content-Type': 'application/json',
     Authorization: token ? `Bearer ${token}` : '',
 });
@@ -64,10 +65,16 @@ export const api = ({ dispatch }, message) => {
     if (!(message.meta && message.meta.callApi)) {
         return;
     }
-    const { token, endpoint } = message.meta;
+    const {
+        token, endpoint, method = 'GET', body,
+    } = message.meta;
     apiCall(fetch, handleJson)(
         BASE_URL + endpoint,
-        { headers: getJsonAuthHeaders(token) },
+        {
+            method,
+            headers: getJsonAuthHeaders(token),
+            body: body ? JSON.stringify(body) : undefined,
+        },
     ).then(
         (data) => setTimeout(() => dispatch(apiSuccess(message, data)), TIMEOUT),
         (error) => setTimeout(() => dispatch(apiFail(message, error.message)), TIMEOUT),

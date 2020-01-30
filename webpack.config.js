@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -19,6 +20,11 @@ module.exports = {
     },
     resolve: {
         extensions: [ '*', '.js', '.jsx' ],
+        alias: {
+            user: path.resolve(__dirname, './src/user'),
+            category: path.resolve(__dirname, './src/category'),
+            remote: path.resolve(__dirname, './src/app/remote'),
+        },
     },
     output: {
         path: `${__dirname}/dist`,

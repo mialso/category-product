@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { isAnyLoading } from './remote';
+import { isAnyLoading } from 'remote/reducer';
 import { unseenError, markSeenError } from './error';
 
 import './common.css';

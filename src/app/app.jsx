@@ -1,7 +1,8 @@
 import React from 'react';
+import { UserLogin, UserMenu } from 'user/login';
+import { RequireUser } from 'user/remote';
+import { RequireCategories, CategoryList } from 'category/list';
 import { ProgressBar, UnseenError } from './common';
-import { UserLogin, UserMenu } from '../user/login';
-import { RemoteUser } from '../user/remote';
 
 import './app.css';
 
@@ -10,7 +11,6 @@ export const NothingF = () => false;
 
 export const UserSpinner = () => (<div>User spinner</div>);
 
-export const Category = () => (<div>Category</div>);
 export const CategoryCreate = () => (<div>Category create</div>);
 
 export const Product = () => (<div>Product</div>);
@@ -22,19 +22,21 @@ export const App = () => (
             <ProgressBar />
             <UnseenError />
         </div>
-        <RemoteUser>
+        <RequireUser>
             <div className="App-TopMenu">
                 <UserMenu />
                 <UserLogin />
             </div>
             <div className="App-Content">
-                <Category />
+                <RequireCategories>
+                    <CategoryList />
+                </RequireCategories>
                 <Product />
             </div>
             <div className="App-Modal">
                 <CategoryCreate />
                 <ProductCreate />
             </div>
-        </RemoteUser>
+        </RequireUser>
     </div>
 );

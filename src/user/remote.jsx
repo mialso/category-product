@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { readUser } from './action';
-import {
-    NOT_ASKED, READY, REGULAR, GUEST,
-} from './constants';
+import { NOT_ASKED, READY } from '../constants';
+import { REGULAR, GUEST } from './constants';
 
 export const mapStateToProps = ({ user }) => user;
 
-export const RemoteUser = ({ children }) => {
+export const RequireUser = ({ children }) => {
     const user = useSelector(mapStateToProps);
     const dispatch = useDispatch();
     useEffect(() => {

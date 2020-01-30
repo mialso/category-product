@@ -1,9 +1,7 @@
 import {
     USER_SIGNUP, READ_USER, SET_USER,
 } from './action';
-import {
-    NOT_ASKED, ASKED, READY,
-} from './constants';
+import { NOT_ASKED, ASKED, READY } from '../constants';
 
 /*
 const User = {
