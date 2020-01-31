@@ -2,6 +2,13 @@
     flex: 1;
 }
 
+.Category-Button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
 .CategoryList {
     flex: 1;
 }

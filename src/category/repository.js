@@ -1,9 +1,13 @@
 import { SUCCESS } from 'remote/api';
+import { openModal, closeModal } from 'ui/modal';
+import { categoryMode } from './reducer';
 import {
-    READ_CATEGORIES, READ_CATEGORIES_API, CREATE_CATEGORY,
-    readCategoriesApi, setCategories, createCategoryApi,
+    READ_CATEGORIES, READ_CATEGORIES_API, CREATE_CATEGORY, UPDATE_CATEGORY,
+    SUBMIT_CATEGORY, CREATE_CATEGORY_API,
+    readCategoriesApi, setCategories, createCategoryApi, updateCategoryApi,
 } from './action';
 import { ASKED } from '../constants';
+import { MODE_EDIT, MODE_CREATE } from './constants';
 
 const TIMEOUT = 0;
 
@@ -30,9 +34,37 @@ export function categoryData({ dispatch, getState }, message) {
             break;
         }
         case CREATE_CATEGORY: {
-            const { parent, name = 'some' } = message.payload;
+            /*
+            const { parent } = message.payload;
             const newCategory = { parent, name };
-            setTimeout(() => withToken(dispatch, createCategoryApi(newCategory)), TIMEOUT);
+            */
+            dispatch(openModal());
+            // setTimeout(() => withToken(dispatch, createCategoryApi(newCategory)), TIMEOUT);
+            break;
+        }
+        case CREATE_CATEGORY_API + SUCCESS: {
+            dispatch(closeModal());
+            break;
+        }
+        case SUBMIT_CATEGORY: {
+            const mode = categoryMode(getState());
+            const { name, parentId } = message.payload;
+            const category = { name, parentId };
+            switch (mode) {
+                case MODE_CREATE: {
+                    setTimeout(() => withToken(dispatch, createCategoryApi(category)), TIMEOUT);
+                    break;
+                }
+                case MODE_EDIT: {
+                    break;
+                }
+                default: break;
+            }
+            break;
+        }
+        case UPDATE_CATEGORY: {
+            const category = message.payload;
+            setTimeout(() => withToken(dispatch, updateCategoryApi(category)), TIMEOUT);
             break;
         }
         default: break;

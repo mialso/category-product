@@ -38,5 +38,13 @@ export const GuestUser = (Component) => {
     return (<Component />);
 };
 
+export const RegisteredUser = ({ children }) => {
+    const currentUser = useSelector(({ user }) => user.currentUser);
+    if (currentUser.role !== REGULAR) {
+        return null;
+    }
+    return (<>{children}</>);
+};
+
 export const withRegularUser = (Component) => RegularUser.bind(null, Component);
 export const withGuestUser = (Component) => GuestUser.bind(null, Component);

@@ -1,7 +1,17 @@
 categories: !!seq
-    - !!map { id: category_1, name: outer, ? parent, op: CREATE }
-    - !!map { id: category_2, name: inner, ? parent, op: CREATE }
-    - !!map { id: category_3, name: one, parent: category_1, op: CREATE }
-    - !!map { id: category_4, name: two, parent: category_1, op: CREATE }
-    - !!map { id: category_2, name: innerrr, ? parent, op: UPDATE }
-    - !!map { id: category_1, name: outeeer, ? parent, op: UPDATE }
+    - !!map { id: category_1, name: outer, ? parentId, op: CREATE }
+    - !!map { id: category_2, name: inner, ? parentId, op: CREATE }
+    - !!map { id: category_3, name: one, parentId: category_1, op: CREATE }
+    - !!map { id: category_4, name: two, parentId: category_1, op: CREATE }
+    - !!map { id: category_2, name: innerrr, ? parentId, op: UPDATE }
+    - !!map { id: category_1, name: outeeer, ? parentId, op: UPDATE }
+    - !!map {name: some, parentId: null, id: category_5, op: CREATE}
+    - !!map {name: some, parentId: category_1, id: category_6, op: CREATE}
+    - !!map {name: some, parentId: category_5, id: category_7, op: CREATE}
+    - !!map {name: some, parentId: category_5, id: category_8, op: CREATE}
+    - !!map {name: some, parentId: category_5, id: category_9, op: CREATE}
+    - !!map {name: nested, parentId: category_2, id: category_10, op: CREATE}
+    - !!map {name: nested next, parentId: category_2, id: category_11, op: CREATE}
+    - !!map {name: nested more, parentId: category_2, id: category_12, op: CREATE}
+    - !!map {name: nested one more, parentId: category_2, id: category_13, op: CREATE}
+    - !!map {name: awesome, parentId: category_6, id: category_14, op: CREATE}

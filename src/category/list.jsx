@@ -4,6 +4,8 @@ import { readCategories, createCategory } from './action';
 import { NOT_ASKED, READY } from '../constants';
 import { categoryById, categoryRootNodeIds } from './reducer';
 
+import './list.css';
+
 const mapStateToProps = ({ category }) => category;
 
 export const RequireCategories = ({ children }) => {
@@ -40,18 +42,18 @@ export const Category = ({ id, level }) => {
                 <button
                     type="button"
                     onClick={() => toggleOpen(!isOpen)}
-                    className="Category-Expand"
+                    className="Category-Button"
                 >
-                    EX
+                    <i className="fas fa-angle-down" />
                 </button>
             )}
             {name}
             <button
                 type="button"
-                onClick={() => dispatch(createCategory({ parent: id }))}
-                className="Category-Create"
+                onClick={() => dispatch(createCategory({ parentId: id }))}
+                className="Category-Button"
             >
-                Create Category
+                <i className="fas fa-plus-square" />
             </button>
             { isOpen && <List itemIds={children} level={level + 1} /> }
         </div>
@@ -66,7 +68,7 @@ export const CategoryList = () => {
             <List itemIds={categories} level={0} />
             <button
                 type="button"
-                onClick={() => dispatch(createCategory({ parent: null }))}
+                onClick={() => dispatch(createCategory({ parentId: null }))}
                 className="Category-Create"
             >
                 Create Category

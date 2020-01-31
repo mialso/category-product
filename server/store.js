@@ -1,5 +1,5 @@
 const { model, operations } = require('./constants');
-const { getData } = require('./file_storage');
+const { getData, addData } = require('./file_storage');
 
 const store = {
     [model.user]: {
@@ -65,18 +65,38 @@ const getAll = (modelName) => () => new Promise((resolve, reject) => {
     return resolve(modelStore.byId);
 });
 
-const add = (modelName) => (item) => new Promise((resolve, reject) => {
+const add = (modelName) => async (item) => {
     const modelStore = store[modelName];
     const id = `${modelName}_${countItems(modelName)() + 1}`;
     if (modelStore.byId[id]) {
-        return reject(new Error(`Unable to create item [${modelName}]: id<${id}> exists`));
+        throw new Error(`Unable to create item [${modelName}]: id<${id}> exists`);
     }
     const newItem = { ...item, id, op: operations.create };
+    await addData(modelName)(newItem);
+    // if above addData resolved success, continue
     modelStore.ids.push(newItem.id);
     modelStore.byId[newItem.id] = newItem;
     console.info(`[INFO: <store>]: ${modelName}: created item id={${newItem.id}}`);
-    return resolve(newItem);
-});
+    return newItem;
+};
+
+const update = (modelName) => async (item) => {
+    const modelStore = store[modelName];
+    const storeItem = modelStore.byId[item.id];
+    if (!storeItem) {
+        throw new Error(`Unable to update item [${modelName}]: id<${item.id}> absent`);
+    }
+    const updatedItem = {
+        ...storeItem,
+        ...item,
+        op: operations.update,
+    };
+    await addData(modelName)(updatedItem);
+    // if above addData resolved success, continue
+    modelStore.byId[updatedItem.id] = { ...storeItem, ...item };
+    console.info(`[INFO: <store>]: ${modelName}: created item id={${updatedItem.id}}`);
+    return updatedItem;
+};
 
 module.exports = {
     initStore: init,
@@ -84,5 +104,6 @@ module.exports = {
     findById,
     hasExistId,
     add,
+    update,
     countItems,
 };

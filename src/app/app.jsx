@@ -1,17 +1,13 @@
 import React from 'react';
 import { UserLogin, UserMenu } from 'user/login';
-import { RequireUser } from 'user/remote';
+import { RequireUser, RegisteredUser } from 'user/remote';
 import { RequireCategories, CategoryList } from 'category/list';
+import { CategoryModal } from 'category/input';
+import { Modal } from 'ui/modal/component';
 import { ProgressBar, UnseenError } from './common';
 
 import './app.css';
-
-export const Nothing = () => (<div>Nothing</div>);
-export const NothingF = () => false;
-
-export const UserSpinner = () => (<div>User spinner</div>);
-
-export const CategoryCreate = () => (<div>Category create</div>);
+import '@fortawesome/fontawesome-free/css/all.css';
 
 export const Product = () => (<div>Product</div>);
 export const ProductCreate = () => (<div>Product Create</div>);
@@ -27,16 +23,18 @@ export const App = () => (
                 <UserMenu />
                 <UserLogin />
             </div>
-            <div className="App-Content">
-                <RequireCategories>
-                    <CategoryList />
-                </RequireCategories>
-                <Product />
-            </div>
-            <div className="App-Modal">
-                <CategoryCreate />
-                <ProductCreate />
-            </div>
+            <RegisteredUser>
+                <div className="App-Content">
+                    <RequireCategories>
+                        <CategoryList />
+                    </RequireCategories>
+                    <Product />
+                </div>
+                <Modal>
+                    <CategoryModal />
+                    <ProductCreate />
+                </Modal>
+            </RegisteredUser>
         </RequireUser>
     </div>
 );

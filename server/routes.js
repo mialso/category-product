@@ -1,5 +1,5 @@
 const { findUserByName, checkUserName, generateJwt } = require('./user');
-const { allCategories, createCategory } = require('./category');
+const { allCategories, createCategory, updateCategory } = require('./category');
 const { verifyToken } = require('./auth');
 
 function initRoutes(app) {
@@ -24,17 +24,16 @@ function initRoutes(app) {
     app.post(
         '/api/category/create',
         [ verifyToken ],
-        (req, res) => {
-            createCategory(req.body)
-                .then((item) => res.status(200).send(item))
-                .catch((error) => res.status(400).send({ error: error.message }));
-        },
+        (req, res) => createCategory(req.body)
+            .then((item) => res.status(200).send(item))
+            .catch((error) => res.status(400).send({ error: error.message })),
     );
     app.put(
         '/api/category/update',
         [ verifyToken ],
-        (req, res) => allCategories()
-            .then((categories) => res.status(200).send(categories)),
+        (req, res) => updateCategory(req.body)
+            .then((item) => res.status(200).send(item))
+            .catch((error) => res.status(400).send({ error: error.message })),
     );
 }
 

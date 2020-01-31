@@ -13,8 +13,19 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                exclude: /node_modules/,
                 use: [ MiniCssExtractPlugin.loader, 'css-loader' ],
+            },
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'fonts/'
+                        },
+                    },
+                ]
             },
         ],
     },
@@ -24,6 +35,7 @@ module.exports = {
             user: path.resolve(__dirname, './src/user'),
             category: path.resolve(__dirname, './src/category'),
             remote: path.resolve(__dirname, './src/app/remote'),
+            ui: path.resolve(__dirname, './src/app'),
         },
     },
     output: {
