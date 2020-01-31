@@ -1,7 +1,7 @@
 categories: !!seq
-    - !!map { name: outer, ? parent, ver: 1 }
-    - !!map { name: inner, ? parent, ver: 1 }
-    - !!map { name: one, parent: outer, ver: 1 }
-    - !!map { name: two, parent: outer, ver: 1 }
-    - !!map { name: inner, ? parent, ver: 2 }
-    - !!map { name: outer, ? parent, ver: 2 }
+    - !!map { id: category_1, name: outer, ? parent, op: CREATE }
+    - !!map { id: category_2, name: inner, ? parent, op: CREATE }
+    - !!map { id: category_3, name: one, parent: category_1, op: CREATE }
+    - !!map { id: category_4, name: two, parent: category_1, op: CREATE }
+    - !!map { id: category_2, name: innerrr, ? parent, op: UPDATE }
+    - !!map { id: category_1, name: outeeer, ? parent, op: UPDATE }

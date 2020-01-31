@@ -5,8 +5,8 @@ const allCategories = getAll(category);
 const addCategory = add(category);
 
 const createCategory = ({ name, parent }) => {
-    const newCategory = { name, parent, ver: 1 };
-    return addCategory(name, newCategory);
+    const newCategory = { name, parent };
+    return addCategory(newCategory);
 };
 
 module.exports = {

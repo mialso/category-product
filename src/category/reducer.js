@@ -1,76 +1,98 @@
+import { compose } from 'redux';
 import { SUCCESS } from 'remote/api';
 import { SET_CATEGORIES, READ_CATEGORIES, CREATE_CATEGORY_API } from './action';
 import { NOT_ASKED, ASKED, READY } from '../constants';
 
 const initialState = {
-    names: [],
-    byName: {},
+    ids: [],
+    byId: {},
     dataStatus: NOT_ASKED,
+    error: '',
 };
 
-export const categoryByName = (name) => ({ category }) => category.byName[name];
+export const categoryById = (id) => ({ category }) => category.byId[id];
 
-export const categoryRootNodeIds = ({ category }) => Object.values(category.byName)
+export const categoryRootNodeIds = ({ category }) => Object.values(category.byId)
     .filter((item) => !item.parent)
-    .map((item) => item.name);
-
-function findLevel({ parent }, categoriesMap) {
-    const parentCat = categoriesMap[parent];
-    if (parentCat.level) {
-        return parentCat.level + 1;
-    }
-    return findLevel(parentCat, categoriesMap) + 1;
-}
+    .map((item) => item.id);
 
 function getCategoriesFromPayload(payload) {
-    const childMap = {};
-    const newCategories = Object.values(payload)
-        .map((category) => {
-            const { name, parent } = category;
+    const treeMap = {};
+    Object.values(payload)
+        .forEach((category) => {
+            const { id, parent } = category;
+            // add parent to tree map
             const parentCat = payload[parent];
-            const level = parent ? 0 : 1;
             if (parentCat) {
-                if (!childMap[parentCat.name]) {
-                    childMap[parentCat.name] = parentCat;
-                    childMap[parentCat.name].children = [ name ];
-                    childMap[parentCat.name].level = parentCat.parent ? 0 : 1;
+                if (!treeMap[parentCat.id]) {
+                    treeMap[parentCat.id] = parentCat;
+                    treeMap[parentCat.id].children = [ id ];
                 } else {
-                    childMap[parentCat.name].children.push(name);
+                    treeMap[parentCat.id].children.push(id);
                 }
             }
-            return { name, parent, level };
         });
-    const finalCategories = newCategories.reduce(
+    // TODO: avoid this - use tree map only
+    const finalCategories = Object.values(payload).reduce(
         (acc, category) => {
             let children = [];
-            if (childMap[category.name]) {
-                children = childMap[category.name].children;
+            if (treeMap[category.id]) {
+                children = treeMap[category.id].children;
             }
-            const level = category.level || findLevel(category, childMap);
-            return { ...acc, [category.name]: { ...category, children, level } };
+            return { ...acc, [category.id]: { ...category, children } };
         },
         {},
     );
     return finalCategories;
 }
 
+export const addItem = (item) => (state) => ({
+    ...state,
+    ids: state.ids.concat(item.id),
+    byId: {
+        ...state.byId,
+        [item.id]: item,
+    },
+});
+
+export const updateParent = (item) => (state) => {
+    if (!item.parent) {
+        return state;
+    }
+    const parentCat = state.byId[item.parent];
+    if (!(parentCat && parentCat.id)) {
+        // TODO: create transaction cancell
+        return { ...state, error: `unable to updateParent of [${item.id}]` };
+    }
+    return {
+        ...state,
+        byId: {
+            ...state.byId,
+            [parentCat.id]: {
+                ...parentCat,
+                children: parentCat.children.concat(item.id),
+            },
+        },
+    };
+};
+
 export const categoryReducer = (state = initialState, message) => {
     switch (message.type) {
         case READ_CATEGORIES: return { ...state, dataStatus: ASKED };
         case SET_CATEGORIES: {
             const { payload } = message;
-            const names = Object.keys(payload);
-            if (!(Array.isArray(names) && names.length)) {
+            const ids = Object.keys(payload);
+            if (!(Array.isArray(ids) && ids.length)) {
                 // no data -> do nothing
                 return state;
             }
             const categories = getCategoriesFromPayload(message.payload);
             return {
-                names: state.names.concat(names.filter((name) => !state.names.includes(name))),
-                byName: names.reduce((acc, catId) => ({
+                ids: state.ids.concat(ids.filter((id) => !state.ids.includes(id))),
+                byId: ids.reduce((acc, catId) => ({
                     ...acc,
                     [catId]: categories[catId],
-                }), { ...state.byName }),
+                }), { ...state.byId }),
                 dataStatus: READY,
             };
         }
@@ -79,21 +101,11 @@ export const categoryReducer = (state = initialState, message) => {
             const newCategory = {
                 ...payload,
                 children: [],
-                level: findLevel(payload, state.byName),
             };
-            const parentCat = state.byName[newCategory.parent];
-            return {
-                ...state,
-                names: state.names.concat(newCategory.name),
-                byName: {
-                    ...state.byName,
-                    [newCategory.name]: newCategory,
-                    [parentCat.name]: {
-                        ...parentCat,
-                        children: parentCat.children.concat(newCategory.name),
-                    },
-                },
-            };
+            return compose(
+                updateParent(newCategory),
+                addItem(newCategory),
+            )(state);
         }
         default: return state;
     }

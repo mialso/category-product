@@ -1,4 +1,4 @@
-const { model } = require('./constants');
+const { model, operations } = require('./constants');
 const { getData } = require('./file_storage');
 
 const store = {
@@ -16,6 +16,7 @@ const store = {
     },
 };
 
+const countItems = (modelName) => () => store[modelName].ids.length;
 const hasExistId = (modelName) => (id) => store[modelName].ids.includes(id);
 const setById = (modelName) => (id, item) => {
     store[modelName].byId[id] = item;
@@ -32,13 +33,13 @@ async function init() {
     const categories = await getData(model.category);
     try {
         categories.forEach((category) => {
-            const { name } = category;
+            const { id } = category;
             const nextCategory = { ...category };
-            if (hasExistId(model.category)(name)) {
-                setById(model.category)(name, nextCategory);
+            if (hasExistId(model.category)(id)) {
+                setById(model.category)(id, nextCategory);
             } else {
-                store[model.category].ids.push(name);
-                setById(model.category)(name, nextCategory);
+                store[model.category].ids.push(id);
+                setById(model.category)(id, nextCategory);
             }
         });
         console.info(`[INFO: <store>]: Categories: {${store[model.category].ids.length}} set success`);
@@ -64,14 +65,17 @@ const getAll = (modelName) => () => new Promise((resolve, reject) => {
     return resolve(modelStore.byId);
 });
 
-const add = (modelName) => (id, item) => new Promise((resolve, reject) => {
+const add = (modelName) => (item) => new Promise((resolve, reject) => {
     const modelStore = store[modelName];
+    const id = `${modelName}_${countItems(modelName)() + 1}`;
     if (modelStore.byId[id]) {
         return reject(new Error(`Unable to create item [${modelName}]: id<${id}> exists`));
     }
-    modelStore.ids.push(id);
-    modelStore.byId[id] = item;
-    return resolve(item);
+    const newItem = { ...item, id, op: operations.create };
+    modelStore.ids.push(newItem.id);
+    modelStore.byId[newItem.id] = newItem;
+    console.info(`[INFO: <store>]: ${modelName}: created item id={${newItem.id}}`);
+    return resolve(newItem);
 });
 
 module.exports = {
@@ -80,4 +84,5 @@ module.exports = {
     findById,
     hasExistId,
     add,
+    countItems,
 };

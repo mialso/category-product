@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { readCategories, createCategory } from './action';
 import { NOT_ASKED, READY } from '../constants';
-import { categoryByName, categoryRootNodeIds } from './reducer';
+import { categoryById, categoryRootNodeIds } from './reducer';
 
 const mapStateToProps = ({ category }) => category;
 
@@ -20,22 +20,22 @@ export const RequireCategories = ({ children }) => {
     return (<>{children}</>);
 };
 
-const List = ({ items }) => (
-    <div className="CategoryList">
-        { items.map(
-            (name) => (
-                <Category key={name} name={name} />
+const List = ({ itemIds, level }) => (
+    <div className="CategoryList" style={{ paddingLeft: 24 * level }}>
+        { itemIds.map(
+            (id) => (
+                <Category key={id} id={id} level={level} />
             ),
         )}
     </div>
 );
 
-export const Category = ({ name }) => {
+export const Category = ({ id, level }) => {
     const [ isOpen, toggleOpen ] = useState(false);
     const dispatch = useDispatch();
-    const { children, level = 0 } = useSelector(categoryByName(name));
+    const { name, children } = useSelector(categoryById(id));
     return (
-        <div className="Category" style={{ marginLeft: 8 * level }}>
+        <div className="Category">
             { !!(Array.isArray(children) && children.length) && (
                 <button
                     type="button"
@@ -48,21 +48,29 @@ export const Category = ({ name }) => {
             {name}
             <button
                 type="button"
-                onClick={() => dispatch(createCategory({ parent: name }))}
+                onClick={() => dispatch(createCategory({ parent: id }))}
                 className="Category-Create"
             >
                 Create Category
             </button>
-            { isOpen && <List items={children} /> }
+            { isOpen && <List itemIds={children} level={level + 1} /> }
         </div>
     );
 };
 
 export const CategoryList = () => {
     const categories = useSelector(categoryRootNodeIds, shallowEqual);
+    const dispatch = useDispatch();
     return (
         <div className="Category">
-            <List items={categories} />
+            <List itemIds={categories} level={0} />
+            <button
+                type="button"
+                onClick={() => dispatch(createCategory({ parent: null }))}
+                className="Category-Create"
+            >
+                Create Category
+            </button>
         </div>
     );
 };
