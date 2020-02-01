@@ -94,7 +94,7 @@ const update = (modelName) => async (item) => {
     await addData(modelName)(updatedItem);
     // if above addData resolved success, continue
     modelStore.byId[updatedItem.id] = { ...storeItem, ...item };
-    console.info(`[INFO: <store>]: ${modelName}: created item id={${updatedItem.id}}`);
+    console.info(`[INFO: <store>]: ${modelName}: updated item id={${updatedItem.id}}`);
     return updatedItem;
 };
 

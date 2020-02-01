@@ -8,7 +8,7 @@ export const SUCCESS = '_SUCCESS';
 export const FAIL = '_FAIL';
 
 const BASE_URL = '';
-const TIMEOUT = 1000;
+const TIMEOUT = 500;
 
 export const apiStart = (base) => ({
     type: `${base.type}_START`,

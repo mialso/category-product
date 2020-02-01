@@ -1,8 +1,51 @@
 .Category {
     flex: 1;
+    width: 100%;
+    min-width: 150px;
+    display: flex;
+}
+
+.Category:hover > .Category-Action {
+    visibility: visible;
+}
+
+.Category-Root {
+    max-width: 300px;
+    flex-direction: column;
+}
+
+.Category-LeftSpacer {
+    width: 20px;
+}
+
+.Category-Name {
+    flex: 1;
+    text-align: left;
+}
+
+.Category-Name > span {
+    margin-right: 4px;
+}
+
+.Category-Name:hover {
+    cursor: pointer;
+}
+
+.Category-Name:hover > span {
+    color: Dodgerblue;
+}
+
+.Category-Action {
+    visibility: hidden;
+    margin-right: 4px;
+}
+
+.Category-Action:hover {
+    color: Dodgerblue;
 }
 
 .Category-Button {
+    width: 20px;
     background: none;
     border: none;
     outline: none;

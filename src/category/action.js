@@ -10,6 +10,8 @@ export const UPDATE_CATEGORY_API = 'UPDATE_CATEGORY_API';
 export const SET_CATEGORIES = 'SET_CATEGORIES';
 export const SUBMIT_CATEGORY = 'SUBMIT_CATEGORY';
 
+export const TOGGLE_SELECT_CATEGORY = 'TOGGLE_SELECT_CATEGORY';
+
 export const CATEGORY_NORMAL_MODE = 'CATEGORY_NORMAL_MODE';
 
 export const readCategories = () => ({ type: READ_CATEGORIES });
@@ -37,9 +39,9 @@ export const createCategoryApi = (item) => (token) => ({
         body: item,
     },
 });
-export const updateCategory = (item) => ({
+export const updateCategory = (itemId) => ({
     type: UPDATE_CATEGORY,
-    payload: item,
+    payload: itemId,
 });
 export const updateCategoryApi = (item) => (token) => ({
     type: UPDATE_CATEGORY_API,
@@ -60,6 +62,11 @@ export const setCategories = (categories) => ({
 export const submitCategory = (item) => ({
     type: SUBMIT_CATEGORY,
     payload: item,
+});
+
+export const toggleSelectCategory = (itemId) => ({
+    type: TOGGLE_SELECT_CATEGORY,
+    payload: itemId,
 });
 
 export const categoryNormalMode = () => ({ type: CATEGORY_NORMAL_MODE });

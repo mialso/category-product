@@ -4,6 +4,8 @@ import { categoryEdited, categoryMode } from './reducer';
 import { submitCategory, categoryNormalMode } from './action';
 import { MODE_EDIT, MODE_CREATE } from './constants';
 
+import './input.css';
+
 export const CategoryInput = (props) => {
     const {
         onSubmit, title, showParentInput, onClose, ...rest
@@ -13,22 +15,23 @@ export const CategoryInput = (props) => {
     return (
         <div className="CategoryInput">
             <h4>{ title }</h4>
-            <label>Pick name:</label>
-            <input
-                type="text"
-                value={name}
-                onChange={(e) => setState({ name: e.target.value })}
-            />
-            { showParentInput
-                && (
-                    <>
-                        <label>Pick Parent</label>
-                        <input
-                            type="text"
-                            onChange={(e) => setState({ parentId: e.target.value })}
-                        />
-                    </>
-                )}
+            <div className="CategoryInput-Field">
+                <label>Pick name:</label>
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setState({ name: e.target.value, parentId })}
+                />
+            </div>
+            <div className="CategoryInput-Field">
+                <label>Pick Parent: </label>
+                <input
+                    type="text"
+                    value={parentId || ''}
+                    disabled={!showParentInput}
+                    onChange={(e) => setState({ parentId: e.target.value, name })}
+                />
+            </div>
             <button
                 type="button"
                 disabled={!name}
@@ -48,7 +51,6 @@ export const CategoryEdit = () => {
             title="Category Edit"
             name={name}
             parentId={parentId}
-            showParentInput
             onClose={() => dispatch(categoryNormalMode())}
             onSubmit={(item) => dispatch(submitCategory(item))}
         />

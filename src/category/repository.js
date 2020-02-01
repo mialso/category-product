@@ -1,9 +1,8 @@
 import { SUCCESS } from 'remote/api';
 import { openModal, closeModal } from 'ui/modal';
-import { categoryMode } from './reducer';
 import {
     READ_CATEGORIES, READ_CATEGORIES_API, CREATE_CATEGORY, UPDATE_CATEGORY,
-    SUBMIT_CATEGORY, CREATE_CATEGORY_API,
+    SUBMIT_CATEGORY, CREATE_CATEGORY_API, UPDATE_CATEGORY_API,
     readCategoriesApi, setCategories, createCategoryApi, updateCategoryApi,
 } from './action';
 import { ASKED } from '../constants';
@@ -33,38 +32,31 @@ export function categoryData({ dispatch, getState }, message) {
             setTimeout(() => dispatch(setCategories(message.payload)), TIMEOUT);
             break;
         }
+        case UPDATE_CATEGORY:
         case CREATE_CATEGORY: {
-            /*
-            const { parent } = message.payload;
-            const newCategory = { parent, name };
-            */
             dispatch(openModal());
-            // setTimeout(() => withToken(dispatch, createCategoryApi(newCategory)), TIMEOUT);
             break;
         }
-        case CREATE_CATEGORY_API + SUCCESS: {
+        case CREATE_CATEGORY_API + SUCCESS:
+        case UPDATE_CATEGORY_API + SUCCESS: {
             dispatch(closeModal());
             break;
         }
         case SUBMIT_CATEGORY: {
-            const mode = categoryMode(getState());
+            const { mode, edit: { id } } = getState().category;
             const { name, parentId } = message.payload;
-            const category = { name, parentId };
+            const category = { name, parentId, id };
             switch (mode) {
                 case MODE_CREATE: {
                     setTimeout(() => withToken(dispatch, createCategoryApi(category)), TIMEOUT);
                     break;
                 }
                 case MODE_EDIT: {
+                    setTimeout(() => withToken(dispatch, updateCategoryApi(category)), TIMEOUT);
                     break;
                 }
                 default: break;
             }
-            break;
-        }
-        case UPDATE_CATEGORY: {
-            const category = message.payload;
-            setTimeout(() => withToken(dispatch, updateCategoryApi(category)), TIMEOUT);
             break;
         }
         default: break;

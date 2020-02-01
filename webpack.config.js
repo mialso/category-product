@@ -22,10 +22,10 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            outputPath: 'fonts/'
+                            outputPath: 'fonts/',
                         },
                     },
-                ]
+                ],
             },
         ],
     },
@@ -36,6 +36,7 @@ module.exports = {
             category: path.resolve(__dirname, './src/category'),
             remote: path.resolve(__dirname, './src/app/remote'),
             ui: path.resolve(__dirname, './src/app'),
+            tree: path.resolve(__dirname, './src/app/tree'),
         },
     },
     output: {

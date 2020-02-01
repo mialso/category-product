@@ -1,0 +1,18 @@
+.CategoryInput {
+    display: flex;
+    flex-direction: column;
+}
+
+.CategoryInput-Field {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.CategoryInput-Field > label {
+    flex: 0 0 50%;
+}
+.CategoryInput-Field > input {
+    flex: 0 0 50%;
+    max-width: 50%;
+    box-sizing: border-box;
+}

@@ -15,3 +15,12 @@ categories: !!seq
     - !!map {name: nested more, parentId: category_2, id: category_12, op: CREATE}
     - !!map {name: nested one more, parentId: category_2, id: category_13, op: CREATE}
     - !!map {name: awesome, parentId: category_6, id: category_14, op: CREATE}
+    - !!map {name: nested moreeee, parentId: category_2, id: category_12, op: UPDATE}
+    - !!map {name: nested nextttttt, parentId: category_2, id: category_11, op: UPDATE}
+    - !!map {id: category_4, name: twow, parentId: category_1, op: UPDATE}
+    - !!map {name: model, parentId: null, id: category_5, op: UPDATE}
+    - !!map {name: user, parentId: category_5, id: category_7, op: UPDATE}
+    - !!map {name: category, parentId: category_5, id: category_8, op: UPDATE}
+    - !!map {id: category_1, name: action, parentId: null, op: UPDATE}
+    - !!map {name: product, parentId: category_5, id: category_9, op: UPDATE}
+    - !!map {name: tree, parentId: category_5, id: category_15, op: CREATE}
