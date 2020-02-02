@@ -10,7 +10,7 @@ const store = {
         ids: [],
         byId: {},
     },
-    product: {
+    [model.product]: {
         ids: [],
         byId: {},
     },
@@ -20,6 +20,24 @@ const countItems = (modelName) => () => store[modelName].ids.length;
 const hasExistId = (modelName) => (id) => store[modelName].ids.includes(id);
 const setById = (modelName) => (id, item) => {
     store[modelName].byId[id] = item;
+};
+const loadAsIs = (modelName) => (data) => {
+    try {
+        data.forEach((item) => {
+            const { id } = item;
+            const nextItem = { ...item };
+            if (hasExistId(modelName)(id)) {
+                setById(modelName)(id, nextItem);
+            } else {
+                store[modelName].ids.push(id);
+                setById(modelName)(id, nextItem);
+            }
+        });
+        console.info(`[INFO: <store>]: <${modelName}>: {${store[modelName].ids.length}} set success`);
+    } catch (e) {
+        store[modelName] = { ids: [], byId: {} };
+        console.error(`[ERROR: <store>]: Unable to set <${modelName}>: ${e.message}`);
+    }
 };
 
 async function init() {
@@ -31,22 +49,10 @@ async function init() {
     });
 
     const categories = await getData(model.category);
-    try {
-        categories.forEach((category) => {
-            const { id } = category;
-            const nextCategory = { ...category };
-            if (hasExistId(model.category)(id)) {
-                setById(model.category)(id, nextCategory);
-            } else {
-                store[model.category].ids.push(id);
-                setById(model.category)(id, nextCategory);
-            }
-        });
-        console.info(`[INFO: <store>]: Categories: {${store[model.category].ids.length}} set success`);
-    } catch (e) {
-        store[model.category] = { ids: [], byId: {} };
-        console.error(`[ERROR: <store>]: Unable to set categories:: ${e.message}`);
-    }
+    loadAsIs(model.category)(categories);
+
+    const products = await getData(model.product);
+    loadAsIs(model.product)(products);
 }
 
 const findById = (modelName) => (id) => new Promise((resolve, reject) => {

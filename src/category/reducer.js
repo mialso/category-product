@@ -26,6 +26,7 @@ const initialState = compose(
 export const createItem = compose(itemSelectable, itemTreeNode);
 
 // TODO: remove selectors to separate file ?
+export const categoryState = ({ category }) => category;
 export const categoryMode = ({ category }) => category.mode;
 export const categoryById = (id) => ({ category }) => category.byId[id];
 export const categoryEdited = ({ category }) => category.edit;

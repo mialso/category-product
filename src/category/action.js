@@ -21,7 +21,7 @@ export const readCategoriesApi = (token) => ({
         callApi: true,
         endpoint: '/api/category/all',
         token,
-        model: 'category',
+        model: CATEGORY_MODEL,
     },
 });
 export const createCategory = (item) => ({
@@ -35,7 +35,7 @@ export const createCategoryApi = (item) => (token) => ({
         method: 'POST',
         endpoint: '/api/category/create',
         token,
-        model: 'category',
+        model: CATEGORY_MODEL,
         body: item,
     },
 });

@@ -1,0 +1,4 @@
+product: !!seq
+    - !!map {id: product_1, name: cheese, expireDate: 1580694157, price: 10, op: CREATE}
+    - !!map {id: product_2, name: milk, expireDate: 1580674157, price: 6, op: CREATE}
+

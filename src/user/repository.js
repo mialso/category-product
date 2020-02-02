@@ -8,6 +8,15 @@ import { ASKED } from '../constants';
 
 const TIMEOUT = 0;
 
+export function withToken(dispatch, action) {
+    const token = localStorage.getItem('token');
+    if (token) {
+        dispatch(action(token));
+    } else {
+        dispatch({ type: `ERROR_${action().type}`, error: 'Remote data error: No token' });
+    }
+}
+
 export function userData({ dispatch, getState }, message) {
     switch (message.type) {
         case READ_USER: {

@@ -8,10 +8,11 @@ const ITEM_LIMIT = 800;
 const modelFileMap = {
     [model.user]: path.resolve(process.cwd(), './data/users.yml'),
     [model.category]: path.resolve('./data/categories.yml'),
+    [model.product]: path.resolve('./data/products.yml'),
 };
 
 const getData = (modelName) => readFile(modelFileMap[modelName], 'utf8')
-    .then((data) => yaml.safeLoad(data).categories)
+    .then((data) => yaml.safeLoad(data)[modelName])
     .catch((e) => {
         const error = e.message;
         console.error(`unable to read storage data for model: [${modelName}]: ${error}`);

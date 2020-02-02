@@ -16,10 +16,11 @@ export const errorReducer = (state = initialState, message) => {
             };
         }
         default: {
-            const { error } = message;
+            const { error, type } = message;
+            const errorMessage = `[${type}]: ${error}`;
             if (error) {
                 return {
-                    unseen: state.unseen.concat(error),
+                    unseen: state.unseen.concat(errorMessage),
                 };
             }
             return state;

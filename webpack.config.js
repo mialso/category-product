@@ -37,6 +37,7 @@ module.exports = {
             remote: path.resolve(__dirname, './src/app/remote'),
             ui: path.resolve(__dirname, './src/app'),
             tree: path.resolve(__dirname, './src/app/tree'),
+            product: path.resolve(__dirname, './src/product'),
         },
     },
     output: {

@@ -6,14 +6,12 @@ import {
     readCategories, createCategory, updateCategory, toggleSelectCategory,
 } from './action';
 import { NOT_ASKED, READY } from '../constants';
-import { categoryById, categoryRootNodeIds } from './reducer';
+import { categoryState, categoryById, categoryRootNodeIds } from './reducer';
 
 import './list.css';
 
-const mapStateToProps = ({ category }) => category;
-
 export const RequireCategories = ({ children }) => {
-    const category = useSelector(mapStateToProps);
+    const category = useSelector(categoryState);
     const dispatch = useDispatch();
     useEffect(() => {
         if (category.dataStatus === NOT_ASKED) {

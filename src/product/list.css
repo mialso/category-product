@@ -1,0 +1,22 @@
+.ProductList {
+    flex: 1;
+}
+
+.ProductList-Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+}
+
+.ProductList-Button {
+    height: 32px;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Roboto';
+    font-size: 14px;
+    line-height: 24px;
+    color: white;
+    background-color: green;
+    cursor: pointer;
+}

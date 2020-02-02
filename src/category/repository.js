@@ -1,5 +1,6 @@
 import { SUCCESS } from 'remote/api';
 import { openModal, closeModal } from 'ui/modal';
+import { withToken } from 'user/repository';
 import {
     READ_CATEGORIES, READ_CATEGORIES_API, CREATE_CATEGORY, UPDATE_CATEGORY,
     SUBMIT_CATEGORY, CREATE_CATEGORY_API, UPDATE_CATEGORY_API,
@@ -9,15 +10,6 @@ import { ASKED } from '../constants';
 import { MODE_EDIT, MODE_CREATE } from './constants';
 
 const TIMEOUT = 0;
-
-export function withToken(dispatch, action) {
-    const token = localStorage.getItem('token');
-    if (token) {
-        dispatch(action(token));
-    } else {
-        dispatch({ type: `ERROR_${action().type}`, error: 'Remote data error: No token' });
-    }
-}
 
 export function categoryData({ dispatch, getState }, message) {
     switch (message.type) {

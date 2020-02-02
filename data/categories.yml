@@ -1,4 +1,4 @@
-categories: !!seq
+category: !!seq
     - !!map { id: category_1, name: outer, ? parentId, op: CREATE }
     - !!map { id: category_2, name: inner, ? parentId, op: CREATE }
     - !!map { id: category_3, name: one, parentId: category_1, op: CREATE }
