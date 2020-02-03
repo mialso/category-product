@@ -5,13 +5,18 @@ const allProducts = getAll(product);
 const addProduct = add(product);
 const changeProduct = update(product);
 
-const createProduct = ({ name, parentId }) => {
-    const newProduct = { name, parentId };
+const createProduct = ({ name, price, expireDate }) => {
+    const newProduct = { name, price, expireDate };
     return addProduct(newProduct);
 };
 
-const updateProduct = ({ id, name, parentId }) => {
-    const productChange = { id, name, parentId };
+const updateProduct = (item) => {
+    const productChange = {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        expireDate: item.expireDate,
+    };
     return changeProduct(productChange);
 };
 

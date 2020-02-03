@@ -24,3 +24,7 @@ category: !!seq
     - !!map {id: category_1, name: action, parentId: null, op: UPDATE}
     - !!map {name: product, parentId: category_5, id: category_9, op: UPDATE}
     - !!map {name: tree, parentId: category_5, id: category_15, op: CREATE}
+    - !!map {id: category_2, name: fresh, parentId: '', op: UPDATE}
+    - !!map {name: meat, parentId: category_2, id: category_12, op: UPDATE}
+    - !!map {name: chicken, parentId: category_12, id: category_16, op: CREATE}
+    - !!map {name: other, parentId: category_12, id: category_17, op: CREATE}

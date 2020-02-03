@@ -33,7 +33,7 @@ export const createCategoryApi = (item) => (token) => ({
     meta: {
         callApi: true,
         method: 'POST',
-        endpoint: '/api/category/create',
+        endpoint: `/api/${CATEGORY_MODEL}/create`,
         token,
         model: CATEGORY_MODEL,
         body: item,
@@ -48,9 +48,9 @@ export const updateCategoryApi = (item) => (token) => ({
     meta: {
         callApi: true,
         method: 'PUT',
-        endpoint: '/api/category/update',
+        endpoint: `/api/${CATEGORY_MODEL}/update`,
         token,
-        model: 'category',
+        model: CATEGORY_MODEL,
         body: item,
     },
 });

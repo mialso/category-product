@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { categoryEdited, categoryMode } from './reducer';
+import { categoryEdited, categoryMode, categoryPath } from './selector';
 import { submitCategory, categoryNormalMode } from './action';
 import { MODE_EDIT, MODE_CREATE } from './constants';
 
 import './input.css';
 
+export const CategoryItem = ({ id }) => {
+    const categoryString = useSelector(categoryPath(id));
+    return (
+        <span className="CategoryItem">{categoryString}</span>
+    );
+};
+
 export const CategoryInput = (props) => {
     const {
-        onSubmit, title, showParentInput, onClose, ...rest
+        onSubmit, title, showParentInput, onClose, ...givenCat
     } = props;
-    const [ { name, parentId }, setState ] = useState(rest);
+    const [ { name, parentId }, setState ] = useState(givenCat);
     useEffect(() => onClose, [ onClose ]);
     return (
         <div className="CategoryInput">
@@ -24,17 +31,12 @@ export const CategoryInput = (props) => {
                 />
             </div>
             <div className="CategoryInput-Field">
-                <label>Pick Parent: </label>
-                <input
-                    type="text"
-                    value={parentId || ''}
-                    disabled={!showParentInput}
-                    onChange={(e) => setState({ parentId: e.target.value, name })}
-                />
+                <label>Parent Category: </label>
+                <CategoryItem id={parentId} />
             </div>
             <button
                 type="button"
-                disabled={!name}
+                disabled={!name || name === givenCat.name}
                 onClick={() => onSubmit({ name, parentId })}
             >
                 Submit

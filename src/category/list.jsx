@@ -6,7 +6,7 @@ import {
     readCategories, createCategory, updateCategory, toggleSelectCategory,
 } from './action';
 import { NOT_ASKED, READY } from '../constants';
-import { categoryState, categoryById, categoryRootNodeIds } from './reducer';
+import { categoryState, categoryById, categoryRootNodeIds } from './selector';
 
 import './list.css';
 

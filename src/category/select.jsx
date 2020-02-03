@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { FULL } from 'tree/selectable';
-import { categoryRootNodeIds, categoryById } from './reducer';
+import { categoryRootNodeIds, categoryById } from './selector';
 import { toggleSelectCategory } from './action';
 
 import './select.css';

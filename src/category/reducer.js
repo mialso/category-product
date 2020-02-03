@@ -23,17 +23,17 @@ const initialState = compose(
     mode: MODE_NORMAL,
 });
 
-export const createItem = compose(itemSelectable, itemTreeNode);
+export const createCategoryItem = (data) => ({
+    id: data.id || '',
+    name: data.name || '',
+    parentId: data.parentId || '',
+});
 
-// TODO: remove selectors to separate file ?
-export const categoryState = ({ category }) => category;
-export const categoryMode = ({ category }) => category.mode;
-export const categoryById = (id) => ({ category }) => category.byId[id];
-export const categoryEdited = ({ category }) => category.edit;
-
-export const categoryRootNodeIds = ({ category }) => Object.values(category.byId)
-    .filter((item) => !item.parentId)
-    .map((item) => item.id);
+export const createItem = compose(
+    itemSelectable,
+    itemTreeNode,
+    createCategoryItem,
+);
 
 export const addItem = (item) => (state) => ({
     ...state,
@@ -90,6 +90,10 @@ export const categoryReducer = (state = initialState, message) => {
             const categories = compose(
                 createSelectableFromMap,
                 getTreeFromParentsMap,
+                (dtoMap) => Object.values(dtoMap).reduce(
+                    (acc, item) => ({ ...acc, [item.id]: createCategoryItem(item) }),
+                    {},
+                ),
             )(message.payload);
             return {
                 ...state,

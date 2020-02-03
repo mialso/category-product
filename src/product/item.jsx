@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { productById } from './reducer';
+import { productById } from './selector';
 
 import './item.css';
 

@@ -10,6 +10,7 @@
 .App-Notification {
     width: 100%;
     flex: 0;
+    z-index: 10;
 }
 
 .App-TopMenu {
@@ -23,6 +24,6 @@
 .App-Content {
     display: flex;
     width: 100%;
-    align-items: center;
+    align-items: flex-start;
     flex: 1;
 }

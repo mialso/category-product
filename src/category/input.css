@@ -1,11 +1,13 @@
 .CategoryInput {
     display: flex;
+    min-width: 450px;
     flex-direction: column;
 }
 
 .CategoryInput-Field {
     display: flex;
     margin-bottom: 16px;
+    align-items: center;
 }
 
 .CategoryInput-Field > label {
@@ -15,4 +17,10 @@
     flex: 0 0 50%;
     max-width: 50%;
     box-sizing: border-box;
+}
+
+.CategoryItem {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: lightgray;
 }
