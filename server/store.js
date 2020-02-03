@@ -14,6 +14,10 @@ const store = {
         ids: [],
         byId: {},
     },
+    [model.productCategories]: {
+        byProductId: {},
+        byCategoryId: {},
+    },
 };
 
 const countItems = (modelName) => () => store[modelName].ids.length;
@@ -39,6 +43,40 @@ const loadAsIs = (modelName) => (data) => {
         console.error(`[ERROR: <store>]: Unable to set <${modelName}>: ${e.message}`);
     }
 };
+const loadAggregate = (modelName) => (data) => {
+    const resultState = {
+        byProductId: {},
+        byCategoryId: {},
+    };
+    try {
+        data.forEach((item) => {
+            const { productId, categoryIds, op } = item;
+            switch (op) {
+                case 'CREATE': {
+                    categoryIds.forEach((categoryId) => {
+                        if (resultState.byCategoryId[categoryId]) {
+                            resultState.byCategoryId[categoryId].push(productId);
+                        } else {
+                            resultState.byCategoryId[categoryId] = [ productId ];
+                        }
+                    });
+                    resultState.byProductId[productId] = categoryIds;
+                    break;
+                }
+                default: {
+                    console.error(`[ERROR: <store>]: Unknown operation: ${op}`);
+                    break;
+                }
+            }
+        });
+        debugger;
+        store[modelName] = resultState;
+        console.info(`[INFO: <store>]: <${modelName}>: aggregate set success`);
+    } catch (e) {
+        store[modelName] = { byProductId: {}, byCategoryId: {} };
+        console.error(`[ERROR: <store>]: Unable to set <${modelName}>: ${e.message}`);
+    }
+};
 
 async function init() {
     const usersData = 'mak\nmik';
@@ -53,6 +91,9 @@ async function init() {
 
     const products = await getData(model.product);
     loadAsIs(model.product)(products);
+
+    const productCategories = await getData(model.productCategories);
+    loadAggregate(model.productCategories)(productCategories);
 }
 
 const findById = (modelName) => (id) => new Promise((resolve, reject) => {
@@ -63,12 +104,12 @@ const findById = (modelName) => (id) => new Promise((resolve, reject) => {
     return resolve(store[modelName].byId[id]);
 });
 
-const getAll = (modelName) => () => new Promise((resolve, reject) => {
+const getAll = (modelName, key = 'byId') => () => new Promise((resolve, reject) => {
     const modelStore = store[modelName];
     if (!modelStore) {
         return reject(new Error(`No [${modelName}] data found`));
     }
-    return resolve(modelStore.byId);
+    return resolve(modelStore[key]);
 });
 
 const add = (modelName) => async (item) => {

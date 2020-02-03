@@ -41,7 +41,6 @@ export const validator = {
         return { isValid: true, message: '', price: priceNum };
     },
     expireDate: (data) => {
-        debugger;
         const utcMseconds = parser.expireDate(data);
         if (Number.isNaN(utcMseconds)) {
             return {

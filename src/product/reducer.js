@@ -3,7 +3,7 @@ import { SUCCESS } from 'remote/api';
 import { USER_LOGOUT } from 'user/action';
 import {
     READ_PRODUCTS, SET_PRODUCTS, CREATE_PRODUCT, CREATE_PRODUCT_API,
-    PRODUCT_NORMAL_MODE,
+    PRODUCT_NORMAL_MODE, UPDATE_PRODUCT, UPDATE_PRODUCT_API,
 } from './action';
 import { NOT_ASKED, ASKED, READY } from '../constants';
 import { MODE_EDIT, MODE_CREATE, MODE_NORMAL } from './constants';
@@ -11,6 +11,7 @@ import { MODE_EDIT, MODE_CREATE, MODE_NORMAL } from './constants';
 const initialState = {
     ids: [],
     byId: {},
+    categoriesByProduct: {},
     dataStatus: NOT_ASKED,
     mode: MODE_NORMAL,
 };
@@ -47,7 +48,7 @@ export const productReducer = (state = initialState, message) => {
     switch (message.type) {
         case READ_PRODUCTS: return { ...state, dataStatus: ASKED };
         case SET_PRODUCTS: {
-            const productMap = message.payload;
+            const { productMap, categoriesByProduct } = message.payload;
             const ids = Object.keys(productMap);
             return {
                 ...state,
@@ -57,6 +58,7 @@ export const productReducer = (state = initialState, message) => {
                     [productId]: createItem(productMap[productId]),
                 }), { ...state.byId }),
                 dataStatus: READY,
+                categoriesByProduct,
             };
         }
         case CREATE_PRODUCT: return compose(
@@ -66,6 +68,14 @@ export const productReducer = (state = initialState, message) => {
         case CREATE_PRODUCT_API + SUCCESS: return compose(
             switchMode(MODE_NORMAL),
             addItem(createItem(message.payload)),
+        )(state);
+        case UPDATE_PRODUCT: return compose(
+            switchMode(MODE_EDIT),
+            setEditItem(message.payload),
+        )(state);
+        case UPDATE_PRODUCT_API + SUCCESS: return compose(
+            switchMode(MODE_NORMAL),
+            updateItem(createItem(message.payload)),
         )(state);
         case PRODUCT_NORMAL_MODE: return compose(
             switchMode(MODE_NORMAL),

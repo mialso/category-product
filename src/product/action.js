@@ -22,6 +22,15 @@ export const readProductsApi = (token) => ({
         model: PRODUCT_MODEL,
     },
 });
+export const readProductCategoriesApi = (token) => ({
+    type: READ_PRODUCT_CATEGORIES_API,
+    meta: {
+        callApi: true,
+        endpoint: `/api/${PRODUCT_MODEL}/all`,
+        token,
+        model: PRODUCT_MODEL,
+    },
+});
 export const createProduct = (item) => ({
     type: CREATE_PRODUCT,
     payload: item,

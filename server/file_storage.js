@@ -9,6 +9,7 @@ const modelFileMap = {
     [model.user]: path.resolve(process.cwd(), './data/users.yml'),
     [model.category]: path.resolve('./data/categories.yml'),
     [model.product]: path.resolve('./data/products.yml'),
+    [model.productCategories]: path.resolve('./data/productCategories.yml'),
 };
 
 const getData = (modelName) => readFile(modelFileMap[modelName], 'utf8')

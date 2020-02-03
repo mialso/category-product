@@ -28,3 +28,4 @@ category: !!seq
     - !!map {name: meat, parentId: category_2, id: category_12, op: UPDATE}
     - !!map {name: chicken, parentId: category_12, id: category_16, op: CREATE}
     - !!map {name: other, parentId: category_12, id: category_17, op: CREATE}
+    - !!map {name: diary, parentId: category_2, id: category_13, op: UPDATE}

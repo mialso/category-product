@@ -26,10 +26,10 @@ export const App = () => (
                 <div className="App-Content">
                     <RequireCategories>
                         <CategoryList />
+                        <RequireProducts>
+                            <ProductList />
+                        </RequireProducts>
                     </RequireCategories>
-                    <RequireProducts>
-                        <ProductList />
-                    </RequireProducts>
                 </div>
                 <Modal>
                     <CategoryModal />

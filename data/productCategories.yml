@@ -1,0 +1,2 @@
+productCategories: !!seq
+    - !!map { productId: product_1, categoryIds: [ category_13, category_3 ], op: CREATE }

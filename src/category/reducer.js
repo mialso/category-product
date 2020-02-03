@@ -8,6 +8,7 @@ import {
 import {
     SET_CATEGORIES, READ_CATEGORIES, CREATE_CATEGORY, CREATE_CATEGORY_API,
     CATEGORY_NORMAL_MODE, UPDATE_CATEGORY, UPDATE_CATEGORY_API, TOGGLE_SELECT_CATEGORY,
+    READ_CATEGORIES_BYPRODUCT_API,
 } from './action';
 import { NOT_ASKED, ASKED, READY } from '../constants';
 import { MODE_EDIT, MODE_CREATE, MODE_NORMAL } from './constants';
@@ -21,6 +22,7 @@ const initialState = compose(
     error: '',
     edit: {},
     mode: MODE_NORMAL,
+    byProductId: {},
 });
 
 export const createCategoryItem = (data) => ({
@@ -143,6 +145,12 @@ export const categoryReducer = (state = initialState, message) => {
             toggleParentSelect(message.payload),
             toggleSelect(message.payload),
         )(state);
+        case READ_CATEGORIES_BYPRODUCT_API + SUCCESS: {
+            return {
+                ...state,
+                byProductId: message.payload,
+            };
+        }
         default: return state;
     }
 };

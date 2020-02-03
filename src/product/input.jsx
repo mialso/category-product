@@ -1,14 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { productMode, productEdited } from './selector';
 import { MODE_EDIT, MODE_CREATE } from './constants';
 import { submitProduct, productNormalMode } from './action';
+
+export const formatDate = (date) => {
+    if (!date) {
+        return '';
+    }
+    return new Date(date * 1000).toISOString().split('T')[0];
+};
+
+export const hasDiff = (input, product) => {
+    const inputProduct = { ...input, expireDate: Date.parse(input.expireDate) / 1000 };
+    return shallowEqual(inputProduct, product);
+};
 
 export const ProductInput = (props) => {
     const {
         onSubmit, title, onClose, product,
     } = props;
-    const [ inputProduct, setState ] = useState(product);
+    const [ inputProduct, setState ] = useState({
+        ...product,
+        expireDate: formatDate(product.expireDate),
+    });
     useEffect(() => onClose, [ onClose ]);
     return (
         <div className="ProductInput">
@@ -39,7 +54,7 @@ export const ProductInput = (props) => {
             </div>
             <button
                 type="button"
-                disabled={!inputProduct.name || inputProduct.name === product.name}
+                disabled={hasDiff(inputProduct, product)}
                 onClick={() => onSubmit(inputProduct)}
             >
                 Submit

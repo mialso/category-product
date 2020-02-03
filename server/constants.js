@@ -2,6 +2,7 @@ const model = {
     category: 'category',
     user: 'user',
     product: 'product',
+    productCategories: 'productCategories',
 };
 
 const operations = {

@@ -10,8 +10,6 @@ import { ASKED } from '../constants';
 import { MODE_EDIT, MODE_CREATE } from './constants';
 import { validator } from './validation';
 
-const TIMEOUT = 0;
-
 export function productData({ dispatch, getState }, message) {
     switch (message.type) {
         case READ_PRODUCTS: {
@@ -22,7 +20,7 @@ export function productData({ dispatch, getState }, message) {
             break;
         }
         case READ_PRODUCTS_API + SUCCESS: {
-            setTimeout(() => dispatch(setProducts(message.payload)), TIMEOUT);
+            dispatch(setProducts(message.payload));
             break;
         }
         case UPDATE_PRODUCT:
@@ -36,10 +34,11 @@ export function productData({ dispatch, getState }, message) {
             const product = {
                 name, price, expireDate, id,
             };
+            // TODO - go with validator keys, instead of input object
             const productValidator = Object.keys(product).reduce(
                 (acc, key) => {
                     const value = product[key];
-                    let validatedValue = null;
+                    let validatedValue = value;
                     if (validator[key]) {
                         const keyValidator = validator[key](value);
                         validatedValue = keyValidator[key];
@@ -57,7 +56,7 @@ export function productData({ dispatch, getState }, message) {
                         values: { ...acc.values, [key]: validatedValue },
                     };
                 },
-                { hasErrors: false, errors: {}, values: {} },
+                { hasErrors: false, errors: {}, values: product },
             );
             if (productValidator.hasErrors) {
                 dispatch({
@@ -68,11 +67,11 @@ export function productData({ dispatch, getState }, message) {
             }
             switch (mode) {
                 case MODE_CREATE: {
-                    setTimeout(() => withToken(dispatch, createProductApi(productValidator.values)), TIMEOUT);
+                    withToken(dispatch, createProductApi(productValidator.values));
                     break;
                 }
                 case MODE_EDIT: {
-                    setTimeout(() => withToken(dispatch, updateProductApi(productValidator.values)), TIMEOUT);
+                    withToken(dispatch, updateProductApi(productValidator.values));
                     break;
                 }
                 default: break;

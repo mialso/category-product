@@ -2,6 +2,7 @@ export const CATEGORY_MODEL = 'category';
 
 export const READ_CATEGORIES = 'READ_CATEGORIES';
 export const READ_CATEGORIES_API = 'READ_CATEGORIES_API';
+export const READ_CATEGORIES_BYPRODUCT_API = 'READ_CATEGORIES_BYPRODUCT_API';
 export const CREATE_CATEGORY = 'CREATE_CATEGORY';
 export const CREATE_CATEGORY_API = 'CREATE_CATEGORY_API';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
@@ -19,7 +20,16 @@ export const readCategoriesApi = (token) => ({
     type: READ_CATEGORIES_API,
     meta: {
         callApi: true,
-        endpoint: '/api/category/all',
+        endpoint: `/api/${CATEGORY_MODEL}/all`,
+        token,
+        model: CATEGORY_MODEL,
+    },
+});
+export const readCategoriesByProductApi = (token) => ({
+    type: READ_CATEGORIES_API,
+    meta: {
+        callApi: true,
+        endpoint: `/api/${CATEGORY_MODEL}/byProduct/all`,
         token,
         model: CATEGORY_MODEL,
     },

@@ -5,3 +5,7 @@ product: !!seq
     - !!map {name: fresh meat, price: '34', expireDate: '2020-02-11', id: product_3, op: CREATE}
     - !!map {name: frozen meat, price: 29, expireDate: 1594857600, id: product_4, op: CREATE}
     - !!map {name: fresh chicken meat, price: 24, expireDate: 1581379200, id: product_5, op: CREATE}
+    - !!map {name: fresh meat, price: 34, expireDate: 1581465600, id: product_3, op: UPDATE}
+    - !!map {name: fresh meat, price: 34, expireDate: 1582502400, id: product_3, op: UPDATE}
+    - !!map {name: fresh meat, price: 34, expireDate: 1586822400, id: product_3, op: UPDATE}
+    - !!map {name: fresh meat, price: 34, expireDate: 1586908800, id: product_3, op: UPDATE}
