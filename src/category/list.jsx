@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import classnames from 'classnames';
 import { EMPTY, PARTIAL, FULL } from 'tree/selectable';
@@ -92,12 +92,13 @@ export const Category = ({ id, level, isSelectOnly }) => {
 export const CategoryList = () => {
     const categories = useSelector(categoryRootNodeIds, shallowEqual);
     const dispatch = useDispatch();
+    const handleCreateClick = useCallback(() => dispatch(createCategory({ parentId: null })));
     return (
         <div className="Category Category-Root">
             <List itemIds={categories} level={0} />
             <button
                 type="button"
-                onClick={() => dispatch(createCategory({ parentId: null }))}
+                onClick={handleCreateClick}
                 className="Category-Create"
             >
                 Create root Category

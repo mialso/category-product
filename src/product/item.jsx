@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { productById } from './selector';
 import { updateProduct } from './action';
-import { CategoryItem } from '../category/input';
 
 import './item.css';
 
@@ -14,10 +13,7 @@ export const formatLocal = (date) => {
 };
 
 export const ProductItem = ({ id }) => {
-    const {
-        name, expireDate, price, categoryIds,
-    } = useSelector(productById(id), shallowEqual);
-    const dispatch = useDispatch();
+    const { name, expireDate, price } = useSelector(productById(id));
     return (
         <div className="ProductItem">
             <div className="ProductItem-Content">
@@ -31,17 +27,20 @@ export const ProductItem = ({ id }) => {
                     <span>{formatLocal(expireDate)}</span>
                 </div>
             </div>
-            <div className="ProductItem-Category">
-                { categoryIds.map((catId) => <CategoryItem key={catId} id={catId} />) }
-            </div>
-            <div className="ProductItem-Action">
-                <button
-                    type="button"
-                    onClick={() => dispatch(updateProduct(id))}
-                >
-                    Edit
-                </button>
-            </div>
         </div>
     );
 };
+
+export const ProductEdit = ({ id }) => {
+    const dispatch = useDispatch();
+    return (
+        <div className="ProductItem-Action">
+            <button
+                type="button"
+                onClick={() => dispatch(updateProduct(id))}
+            >
+                Edit
+            </button>
+        </div>
+    );
+}

@@ -36,3 +36,9 @@
     margin-left: 12px;
     cursor: pointer;
 }
+
+.Card {
+    margin: 16px;
+    padding: 16px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}

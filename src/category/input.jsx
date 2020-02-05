@@ -1,11 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { categoryEdited, categoryMode, categoryPath } from './selector';
+import {
+    categoryEdited, categoryMode, categoryPath, categoriesByProduct,
+} from './selector';
 import { submitCategory, categoryNormalMode } from './action';
 import { MODE_EDIT, MODE_CREATE } from './constants';
 
 import './input.css';
 
+export const CategoryActionItem = ({ id, onClick }) => {
+    const categoryString = useSelector(categoryPath(id));
+    return (
+        <span className="CategoryActionItem">
+            <span className="CategoryActionItem-Name">{categoryString}</span>
+            <button
+                onClick={onClick}
+                type="button"
+            >
+                <span className="fas fa-times" />
+            </button>
+        </span>
+    );
+};
+
+export const CategoryItems = ({ productId }) => {
+    const categoryIds = useSelector(categoriesByProduct(productId));
+    if (!(Array.isArray(categoryIds) && categoryIds.length)) {
+        return null;
+    }
+    return (
+        <div className="ProductItem-Category">
+            { categoryIds.map((catId) => <CategoryItem key={catId} id={catId} />) }
+        </div>
+    );
+};
 export const CategoryItem = ({ id }) => {
     const categoryString = useSelector(categoryPath(id));
     return (

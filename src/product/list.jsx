@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { CategorySelect } from 'category/select';
 import { NOT_ASKED, READY } from '../constants';
 import { productState, productIds } from './selector';
 import { readProducts, createProduct } from './action';
@@ -8,6 +7,7 @@ import { ProductItem } from './item';
 
 import './list.css';
 
+/*
 export const ProductList = () => {
     const ids = useSelector(productIds);
     const dispatch = useDispatch();
@@ -28,6 +28,7 @@ export const ProductList = () => {
         </div>
     );
 };
+*/
 
 export const RequireProducts = ({ children }) => {
     const product = useSelector(productState);

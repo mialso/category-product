@@ -9,6 +9,7 @@ export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 export const UPDATE_CATEGORY_API = 'UPDATE_CATEGORY_API';
 
 export const SET_CATEGORIES = 'SET_CATEGORIES';
+export const SET_CATEGORY_BYPRODUCT = 'SET_CATEGORY_BYPRODUCT';
 export const SUBMIT_CATEGORY = 'SUBMIT_CATEGORY';
 
 export const TOGGLE_SELECT_CATEGORY = 'TOGGLE_SELECT_CATEGORY';
@@ -67,6 +68,10 @@ export const updateCategoryApi = (item) => (token) => ({
 
 export const setCategories = (categories) => ({
     type: SET_CATEGORIES,
+    payload: categories,
+});
+export const setCategoryByProduct = (categories) => ({
+    type: SET_CATEGORY_BYPRODUCT,
     payload: categories,
 });
 export const submitCategory = (item) => ({

@@ -5,6 +5,7 @@ import { productReducer } from 'product/reducer';
 import { apiReducer } from 'remote/reducer';
 import { modalReducer } from 'ui/modal';
 import { errorReducer } from '../app/error';
+import { formReducer } from '../app/form/reducer';
 
 export default combineReducers({
     api: apiReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
     user: userReducer,
     category: categoryReducer,
     product: productReducer,
+    form: formReducer,
 });

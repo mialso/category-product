@@ -3,10 +3,10 @@ import { UserLogin, UserMenu } from 'user/login';
 import { RequireUser, RegisteredUser } from 'user/remote';
 import { RequireCategories, CategoryList } from 'category/list';
 import { CategoryModal } from 'category/input';
-import { RequireProducts, ProductList } from 'product/list';
-import { ProductModal } from 'product/input';
+import { RequireProducts } from 'product/list';
 import { Modal } from 'ui/modal/component';
 import { ProgressBar, UnseenError } from './common';
+import { ProductList, ProductEditor } from './product';
 
 import './app.css';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -33,7 +33,7 @@ export const App = () => (
                 </div>
                 <Modal>
                     <CategoryModal />
-                    <ProductModal />
+                    <ProductEditor />
                 </Modal>
             </RegisteredUser>
         </RequireUser>

@@ -2,6 +2,7 @@ import { userData } from 'user/repository';
 import { categoryData } from 'category/repository';
 import { productData } from 'product/repository';
 import { api } from 'remote/api';
+import { formController } from '../app/form/controller';
 
 export function connectMiddleware(controller) {
     return (store) => (next) => (message) => {
@@ -10,6 +11,6 @@ export function connectMiddleware(controller) {
     };
 }
 
-const middlewares = [ userData, categoryData, productData, api ].map(connectMiddleware);
+const middlewares = [ userData, categoryData, productData, api, formController ].map(connectMiddleware);
 
 export default middlewares;

@@ -5,7 +5,9 @@ import {
     READ_CATEGORIES, READ_CATEGORIES_API, CREATE_CATEGORY, UPDATE_CATEGORY,
     SUBMIT_CATEGORY, CREATE_CATEGORY_API, UPDATE_CATEGORY_API,
     readCategoriesApi, setCategories, createCategoryApi, updateCategoryApi,
+    setCategoryByProduct,
 } from './action';
+import { READ_PRODUCTS_API } from '../product/action';
 import { ASKED } from '../constants';
 import { MODE_EDIT, MODE_CREATE } from './constants';
 
@@ -22,6 +24,10 @@ export function categoryData({ dispatch, getState }, message) {
         }
         case READ_CATEGORIES_API + SUCCESS: {
             setTimeout(() => dispatch(setCategories(message.payload)), TIMEOUT);
+            break;
+        }
+        case READ_PRODUCTS_API + SUCCESS: {
+            dispatch(setCategoryByProduct(message.payload.categoriesByProduct));
             break;
         }
         case UPDATE_CATEGORY:

@@ -14,6 +14,7 @@ const initialState = {
     categoriesByProduct: {},
     dataStatus: NOT_ASKED,
     mode: MODE_NORMAL,
+    edit: {},
 };
 
 export const createItem = (data = {}) => ({

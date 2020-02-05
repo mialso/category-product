@@ -20,3 +20,5 @@ export const categoryPath = (id) => ({ category }) => {
 export const categoryRootNodeIds = ({ category }) => Object.values(category.byId)
     .filter((item) => !item.parentId)
     .map((item) => item.id);
+
+export const categoriesByProduct = (productId) => ({ category }) => category.byProductId[productId];
