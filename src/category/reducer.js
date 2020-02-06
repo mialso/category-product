@@ -2,15 +2,16 @@ import { compose } from 'redux';
 import { NOT_ASKED, ASKED, READY } from 'app/remote/constants';
 import { SUCCESS } from 'app/remote/api';
 import { USER_LOGOUT } from 'user/action';
-import { getTreeFromParentsMap, itemTreeNode } from 'app/tree/tree';
+import { getTreeFromParentsMap, itemTreeNode, cleanParentChildren } from 'app/tree/tree';
 import {
-    stateSelectable, createSelectableFromMap, toggleParentSelect, toggleSelect, itemSelectable,
+    stateSelectable, createSelectableFromMap, itemSelectable,
+    toggleParentSelect, toggleSelect, removeSelected,
 } from 'app/tree/selectable';
-import { CREATE_PRODUCT_API, UPDATE_PRODUCT_API } from 'product/action';
+import { CREATE_PRODUCT_API, UPDATE_PRODUCT_API, DELETE_PRODUCT_API } from 'product/action';
 import {
     SET_CATEGORIES, READ_CATEGORIES, CREATE_CATEGORY, CREATE_CATEGORY_API,
     CATEGORY_NORMAL_MODE, UPDATE_CATEGORY, UPDATE_CATEGORY_API, TOGGLE_SELECT_CATEGORY,
-    READ_CATEGORIES_BYPRODUCT_API, SET_CATEGORY_BYPRODUCT,
+    READ_CATEGORIES_BYPRODUCT_API, SET_CATEGORY_BYPRODUCT, DELETE_CATEGORY_API,
 } from './action';
 import { MODE_EDIT, MODE_CREATE, MODE_NORMAL } from './constants';
 
@@ -49,6 +50,24 @@ export const addItem = (item) => (state) => ({
 export const updateItem = (item) => (state) => ({
     ...state,
     byId: { ...state.byId, [item.id]: item },
+});
+export const removeItem = (id) => (state) => ({
+    ...state,
+    ids: state.ids.filter((itemId) => itemId !== id),
+    byId: { ...state.byId, [id]: null },
+});
+export const removeRelations = (id) => (state) => ({
+    ...state,
+    byProductId: Object.keys(state.byProductId).reduce(
+        (acc, relId) => {
+            let relCategoryIds = state.byProductId[relId];
+            if (relCategoryIds.includes(id)) {
+                relCategoryIds = relCategoryIds.filter((catId) => catId !== id);
+            }
+            return { ...acc, [relId]: relCategoryIds };
+        },
+        {},
+    ),
 });
 
 export const updateParent = (item) => (state) => {
@@ -150,9 +169,10 @@ export const categoryReducer = (state = initialState, message) => {
             ...state,
             byProductId: message.payload,
         };
+        case DELETE_PRODUCT_API + SUCCESS:
         case UPDATE_PRODUCT_API + SUCCESS:
         case CREATE_PRODUCT_API + SUCCESS: {
-            const { id, categoryIds } = message.payload;
+            const { id, categoryIds = [] } = message.payload;
             return {
                 ...state,
                 byProductId: {
@@ -167,6 +187,12 @@ export const categoryReducer = (state = initialState, message) => {
                 byProductId: message.payload,
             };
         }
+        case DELETE_CATEGORY_API + SUCCESS: return compose(
+            removeRelations(message.payload.id),
+            removeSelected(message.payload.id),
+            removeItem(message.payload.id),
+            cleanParentChildren(state.byId[message.payload.id]),
+        )(state);
         default: return state;
     }
 };

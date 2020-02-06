@@ -8,6 +8,7 @@ const model = {
 const operations = {
     create: 'CREATE',
     update: 'UPDATE',
+    remove: 'REMOVE',
 };
 
 module.exports = {

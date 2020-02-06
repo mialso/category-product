@@ -33,17 +33,22 @@ export const CategorySelect = ({ selectedIds, pickCategory }) => {
     );
 };
 
-export const CategoryPicker = ({ selectedIds, onChange }) => {
-    return (
-        <div className="CategoryPicker">
-            <h4>Category Picker</h4>
-            <div className="CategoryPicker-Items">
-                { selectedIds.map((id) => <CategoryActionItem key={id} id={id} onClick={() => onChange(selectedIds.filter((sId) => sId !== id))} />) }
-            </div>
+export const CategoryPicker = ({ selectedIds, onChange }) => (
+    <div className="CategoryPicker">
+        <h5>Product category</h5>
+        <div className="AppInput-Field">
             <CategorySelect
                 selectedIds={selectedIds}
                 pickCategory={(id) => onChange(selectedIds.concat(id))}
             />
+            <div className="CategoryPicker-Items">
+                { selectedIds.map((id) => (
+                    <CategoryActionItem
+                        key={id}
+                        id={id}
+                        onClick={() => onChange(selectedIds.filter((sId) => sId !== id))}
+                    />)) }
+            </div>
         </div>
-    );
-};
+    </div>
+);

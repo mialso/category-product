@@ -11,6 +11,12 @@ export function connectMiddleware(controller) {
     };
 }
 
-const middlewares = [ userData, categoryData, productData, api, formController ].map(connectMiddleware);
+const middlewares = [
+    userData,
+    categoryData,
+    productData,
+    api,
+    formController,
+].map(connectMiddleware);
 
 export default middlewares;

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './input.css';
+
 export const formatDate = (date) => {
     if (!date) {
         return '';
@@ -7,13 +9,13 @@ export const formatDate = (date) => {
     return new Date(date * 1000).toISOString().split('T')[0];
 };
 
-export const ProductInput = (props) => {
+export const ProductForm = (props) => {
     const { title, product, onChange } = props;
     // useEffect(() => onUnmount, [ onUnmount ]);
     return (
-        <div className="ProductInput">
+        <div className="ProductForm">
             <h4>{ title }</h4>
-            <div className="ProductInput-Field">
+            <div className="AppInput-Field">
                 <label>Pick name:</label>
                 <input
                     type="text"
@@ -21,7 +23,7 @@ export const ProductInput = (props) => {
                     onChange={(e) => onChange({ name: e.target.value })}
                 />
             </div>
-            <div className="ProductInput-Field">
+            <div className="AppInput-Field">
                 <label>Pick price:</label>
                 <input
                     type="text"
@@ -29,7 +31,7 @@ export const ProductInput = (props) => {
                     onChange={(e) => onChange({ price: e.target.value })}
                 />
             </div>
-            <div className="ProductInput-Field">
+            <div className="AppInput-Field">
                 <label>Pick expire date:</label>
                 <input
                     type="date"

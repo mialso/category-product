@@ -5,13 +5,13 @@ import { withToken } from 'user/repository';
 import { READ_PRODUCTS_API } from 'product/action';
 import {
     READ_CATEGORIES, READ_CATEGORIES_API, CREATE_CATEGORY, UPDATE_CATEGORY,
-    SUBMIT_CATEGORY, CREATE_CATEGORY_API, UPDATE_CATEGORY_API,
+    SUBMIT_CATEGORY, CREATE_CATEGORY_API, UPDATE_CATEGORY_API, DELETE_CATEGORY,
+    DELETE_CATEGORY_API,
     readCategoriesApi, setCategories, createCategoryApi, updateCategoryApi,
-    setCategoryByProduct,
+    setCategoryByProduct, deleteCategoryApi,
 } from './action';
 import { MODE_EDIT, MODE_CREATE } from './constants';
-
-const TIMEOUT = 0;
+import { categoryById } from './selector';
 
 export function categoryData({ dispatch, getState }, message) {
     switch (message.type) {
@@ -23,7 +23,7 @@ export function categoryData({ dispatch, getState }, message) {
             break;
         }
         case READ_CATEGORIES_API + SUCCESS: {
-            setTimeout(() => dispatch(setCategories(message.payload.categoryMap)), TIMEOUT);
+            dispatch(setCategories(message.payload.categoryMap));
             break;
         }
         case READ_PRODUCTS_API + SUCCESS: {
@@ -35,6 +35,7 @@ export function categoryData({ dispatch, getState }, message) {
             dispatch(openModal());
             break;
         }
+        case DELETE_CATEGORY_API + SUCCESS:
         case CREATE_CATEGORY_API + SUCCESS:
         case UPDATE_CATEGORY_API + SUCCESS: {
             dispatch(closeModal());
@@ -46,15 +47,25 @@ export function categoryData({ dispatch, getState }, message) {
             const category = { name, parentId, id };
             switch (mode) {
                 case MODE_CREATE: {
-                    setTimeout(() => withToken(dispatch, createCategoryApi(category)), TIMEOUT);
+                    withToken(dispatch, createCategoryApi(category));
                     break;
                 }
                 case MODE_EDIT: {
-                    setTimeout(() => withToken(dispatch, updateCategoryApi(category)), TIMEOUT);
+                    withToken(dispatch, updateCategoryApi(category));
                     break;
                 }
                 default: break;
             }
+            break;
+        }
+        case DELETE_CATEGORY: {
+            const id = message.payload;
+            const { children } = categoryById(id)(getState());
+            if (Array.isArray(children) && children.length) {
+                dispatch({ type: 'ERROR_MESSAGE', error: 'Unable to delete category with children' });
+                break;
+            }
+            withToken(dispatch, deleteCategoryApi(id));
             break;
         }
         default: break;

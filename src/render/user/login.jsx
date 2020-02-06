@@ -15,13 +15,13 @@ export const Login = ({ runUserLogin }) => {
                 Please, enter your name:
             </label>
             <input
-                className="Login-Input"
+                className="AppInput"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
             <button
-                className="Login-Button"
+                className="AppButton Login-Button"
                 type="button"
                 disabled={!name}
                 onClick={() => runUserLogin(name)}
@@ -38,7 +38,7 @@ export const Menu = ({ user, runUserLogout }) => {
             <span>Content for:</span>
             <b>{user.name}</b>
             <button
-                className="UserMenu-Logout"
+                className="UserMenu-Logout AppButton"
                 type="button"
                 onClick={() => runUserLogout()}
             >

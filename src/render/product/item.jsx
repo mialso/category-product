@@ -36,7 +36,7 @@ export const ProductAction = ({ id }) => {
     return (
         <div className="ProductAction">
             <button
-                className="ProductAction-Button"
+                className="AppButton-Tiny ProductAction-Button"
                 type="button"
                 onClick={() => dispatch(updateProduct(id))}
             >
@@ -44,7 +44,7 @@ export const ProductAction = ({ id }) => {
                 Edit
             </button>
             <button
-                className="ProductAction-Button"
+                className="AppButton-Tiny ProductAction-Button"
                 type="button"
                 onClick={() => dispatch(deleteProduct(id))}
             >

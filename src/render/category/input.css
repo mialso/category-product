@@ -4,19 +4,14 @@
     flex-direction: column;
 }
 
-.CategoryInput-Field {
+.CategoryInput-Action {
+    margin-top: 12px;
     display: flex;
-    margin-bottom: 16px;
-    align-items: center;
+    justify-content: center;
 }
 
-.CategoryInput-Field > label {
-    flex: 0 0 50%;
-}
-.CategoryInput-Field > input {
-    flex: 0 0 50%;
-    max-width: 50%;
-    box-sizing: border-box;
+.CategoryInput-Action > button {
+    margin: 4px;
 }
 
 .CategoryItem {

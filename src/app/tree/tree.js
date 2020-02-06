@@ -22,3 +22,14 @@ export function getTreeFromParentsMap(parentMap) {
         });
     return treeMap;
 }
+
+export const cleanParentChildren = ({ parentId, id }) => (state) => ({
+    ...state,
+    byId: {
+        ...state.byId,
+        [parentId]: {
+            ...state.byId[parentId],
+            children: state.byId[parentId].children.filter((childId) => childId !== id),
+        },
+    },
+});

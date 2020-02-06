@@ -1,11 +1,13 @@
 const { findUserByName, checkUserName, generateJwt } = require('./user');
-const { allCategories, createCategory, updateCategory } = require('./category');
 const {
-    allProducts, createProduct, updateProduct, findProduct,
+    allCategories, createCategory, updateCategory, deleteCategory,
+} = require('./category');
+const {
+    allProducts, createProduct, updateProduct, findProduct, deleteProduct,
 } = require('./product');
 const {
     allCategoryProducts, allProductCategories, createProductCategories, findProductCategories,
-    updateProductCategories,
+    updateProductCategories, deleteProductCategories, deleteCategoryProducts,
 } = require('./productCategories');
 const { verifyToken } = require('./auth');
 
@@ -45,6 +47,14 @@ function initRoutes(app) {
             .catch((error) => res.status(400).send({ error: error.message })),
     );
     app.get(
+        '/api/category/delete',
+        [ verifyToken ],
+        (req, res) => deleteCategory(req.query)
+            .then(({ id }) => deleteCategoryProducts(id))
+            .then(({ id, removedFrom }) => res.status(200).send({ id, removedFrom }))
+            .catch((error) => res.status(400).send({ error: error.message })),
+    );
+    app.get(
         '/api/product/all',
         [ verifyToken ],
         (req, res) => Promise.all([ allProducts(), allProductCategories() ])
@@ -56,7 +66,10 @@ function initRoutes(app) {
         [ verifyToken ],
         (req, res) => createProduct(req.body)
             .then(({ id }) => createProductCategories({ id, categoryIds: req.body.categoryIds }))
-            .then(({ productId }) => Promise.all([ findProduct(productId), findProductCategories(productId) ]))
+            .then(({ productId }) => Promise.all([
+                findProduct(productId),
+                findProductCategories(productId),
+            ]))
             .then(([ productMap, categoriesByProduct ]) => res.status(200)
                 .send({ ...productMap, categoryIds: categoriesByProduct }))
             .catch((error) => res.status(400).send({ error: error.message })),
@@ -66,9 +79,20 @@ function initRoutes(app) {
         [ verifyToken ],
         (req, res) => updateProduct(req.body)
             .then(({ id }) => updateProductCategories({ id, categoryIds: req.body.categoryIds }))
-            .then(({ productId }) => Promise.all([ findProduct(productId), findProductCategories(productId) ]))
+            .then(({ productId }) => Promise.all([
+                findProduct(productId),
+                findProductCategories(productId),
+            ]))
             .then(([ productMap, categoriesByProduct ]) => res.status(200)
                 .send({ ...productMap, categoryIds: categoriesByProduct }))
+            .catch((error) => res.status(400).send({ error: error.message })),
+    );
+    app.get(
+        '/api/product/delete',
+        [ verifyToken ],
+        (req, res) => deleteProduct(req.query)
+            .then(({ id }) => deleteProductCategories(id))
+            .then(({ productId }) => res.status(200).send({ id: productId }))
             .catch((error) => res.status(400).send({ error: error.message })),
     );
     app.get(

@@ -1,5 +1,9 @@
 .ProductList {
     flex: 1;
+    max-height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .ProductList-Header {
@@ -9,18 +13,19 @@
     padding: 0 32px;
 }
 
+.ProductList-Items {
+    overflow-y: scroll;
+}
+
 .ProductList-Button {
-    height: 32px;
-    border: none;
-    border-radius: 3px;
-    font-family: 'Roboto';
-    font-size: 14px;
-    line-height: 24px;
     color: white;
     background-color: green;
-    cursor: pointer;
 }
 
 .ProductList-Button > span {
     margin-right: 4px;
+}
+
+.ProductEditor > .AppButton {
+    float: right;
 }

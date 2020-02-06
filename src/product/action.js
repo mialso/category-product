@@ -7,6 +7,7 @@ export const CREATE_PRODUCT_API = 'CREATE_PRODUCT_API';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const UPDATE_PRODUCT_API = 'UPDATE_PRODUCT_API';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const DELETE_PRODUCT_API = 'DELETE_PRODUCT_API';
 
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const SET_PRODUCT_BY_CATEGORY = 'SET_PRODUCT_BY_CATEGORY';
@@ -60,7 +61,15 @@ export const updateProductApi = (item) => (token) => ({
 export const deleteProduct = (id) => ({
     type: DELETE_PRODUCT,
     payload: id,
-    error: 'NOT IMPLEMENTED YET',
+});
+export const deleteProductApi = (id) => (token) => ({
+    type: DELETE_PRODUCT_API,
+    meta: {
+        callApi: true,
+        endpoint: `/api/${PRODUCT_MODEL}/delete?id=${id}`,
+        token,
+        model: PRODUCT_MODEL,
+    },
 });
 
 export const setProducts = (products) => ({

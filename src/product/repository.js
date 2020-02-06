@@ -5,10 +5,10 @@ import { MODE_EDIT, MODE_CREATE } from 'app/form/constants';
 import { withToken } from 'user/repository';
 import { READ_CATEGORIES_API } from 'category/action';
 import {
-    READ_PRODUCTS, READ_PRODUCTS_API,
+    READ_PRODUCTS, READ_PRODUCTS_API, DELETE_PRODUCT,
     CREATE_PRODUCT_API, UPDATE_PRODUCT_API, SUBMIT_PRODUCT,
     readProductsApi, setProducts, createProductApi, updateProductApi,
-    setProductByCategory,
+    setProductByCategory, deleteProductApi,
 } from './action';
 
 export function productData({ dispatch, getState }, message) {
@@ -41,6 +41,10 @@ export function productData({ dispatch, getState }, message) {
         case CREATE_PRODUCT_API + SUCCESS:
         case UPDATE_PRODUCT_API + SUCCESS: {
             dispatch(closeModal());
+            break;
+        }
+        case DELETE_PRODUCT: {
+            withToken(dispatch, deleteProductApi(message.payload));
             break;
         }
         default: break;

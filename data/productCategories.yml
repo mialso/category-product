@@ -33,3 +33,15 @@ productCategories: !!seq
     - !!map {productId: product_3, categoryIds: [category_17, category_4], op: UPDATE}
     - !!map {productId: product_1, categoryIds: [category_13, category_18], op: UPDATE}
     - !!map {productId: product_1, categoryIds: [category_13], op: UPDATE}
+    - !!map {productId: product_1, op: REMOVE}
+    - !!map {productId: product_12, op: REMOVE}
+    - !!map {productId: product_11, op: REMOVE}
+    - !!map {productId: product_2, categoryIds: [category_3, category_11], op: UPDATE}
+    - !!map {productId: product_5, categoryIds: [category_14, category_7, category_16, category_3, category_4, category_11, category_17, category_13], op: UPDATE}
+    - !!map {productId: product_6, categoryIds: [category_10], op: CREATE}
+    - !!map {productId: product_8, categoryIds: [category_9, category_11, category_14, category_10], op: UPDATE}
+    - !!map {productId: product_4, categoryIds: [category_17], op: UPDATE}
+    - !!map {productId: product_5, categoryIds: [category_14, category_7, category_16, category_3, category_4, category_11, category_13], op: UPDATE}
+    - !!map {productId: product_13, categoryIds: [category_3, category_4, category_14], op: CREATE}
+    - !!map {productId: product_6, categoryIds: [], op: UPDATE}
+    - !!map {productId: product_14, categoryIds: [category_10, category_16], op: CREATE}

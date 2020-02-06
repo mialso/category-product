@@ -4,8 +4,9 @@
 > `npm run start`
 > `npm run start:server`
 
-###### for login both `mik` and `mak` work fine
+##### visit `localhost:8080` to see app rendered
 
+###### for login either `mik` or `mak` work fine
 
 #### overview:
 

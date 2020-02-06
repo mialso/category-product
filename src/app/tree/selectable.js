@@ -18,6 +18,11 @@ export function createSelectableFromMap(map) {
     );
 }
 
+export const removeSelected = (id) => (state) => ({
+    ...state,
+    selected: state.selected.filter((itemId) => itemId !== id),
+});
+
 export const toggleSelect = (itemId) => (state) => {
     const shouldSelect = !state.selected.includes(itemId);
     return {

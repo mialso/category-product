@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
     categoryEdited, categoryMode, categoryPath, categoriesByProduct,
 } from 'category/selector';
-import { submitCategory, categoryNormalMode } from 'category/action';
+import { submitCategory, deleteCategory, categoryNormalMode } from 'category/action';
 import { MODE_EDIT, MODE_CREATE } from 'category/constants';
 
 import './input.css';
@@ -44,38 +44,50 @@ export const CategoryItem = ({ id }) => {
 
 export const CategoryInput = (props) => {
     const {
-        onSubmit, title, showParentInput, onClose, ...givenCat
+        onSubmit, onDelete, title, onClose, ...givenCat
     } = props;
     const [ { name, parentId }, setState ] = useState(givenCat);
     useEffect(() => onClose, [ onClose ]);
     return (
         <div className="CategoryInput">
             <h4>{ title }</h4>
-            <div className="CategoryInput-Field">
+            <div className="AppInput-Field">
                 <label>Pick name:</label>
                 <input
+                    className="AppInput"
                     type="text"
                     value={name}
                     onChange={(e) => setState({ name: e.target.value, parentId })}
                 />
             </div>
-            <div className="CategoryInput-Field">
+            <div className="AppInput-Field">
                 <label>Parent Category: </label>
                 <CategoryItem id={parentId} />
             </div>
-            <button
-                type="button"
-                disabled={!name || name === givenCat.name}
-                onClick={() => onSubmit({ name, parentId })}
-            >
-                Submit
-            </button>
+            <div className="CategoryInput-Action">
+                { onDelete
+                    && <button
+                        className="AppButton"
+                        type="button"
+                        onClick={onDelete}
+                    >
+                        Delete
+                    </button> }
+                <button
+                    className="AppButton"
+                    type="button"
+                    disabled={!name || name === givenCat.name}
+                    onClick={() => onSubmit({ name, parentId })}
+                >
+                    Submit
+                </button>
+            </div>
         </div>
     );
 };
 
 export const CategoryEdit = () => {
-    const { name, parentId } = useSelector(categoryEdited);
+    const { name, parentId, id } = useSelector(categoryEdited);
     const dispatch = useDispatch();
     return (
         <CategoryInput
@@ -84,6 +96,7 @@ export const CategoryEdit = () => {
             parentId={parentId}
             onClose={() => dispatch(categoryNormalMode())}
             onSubmit={(item) => dispatch(submitCategory(item))}
+            onDelete={() => dispatch(deleteCategory(id))}
         />
     );
 };

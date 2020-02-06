@@ -1,0 +1,5 @@
+.ProductForm {
+    display: flex;
+    min-width: 450px;
+    flex-direction: column;
+}

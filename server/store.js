@@ -16,23 +16,22 @@ const store = {
     },
 };
 
-const countItems = (modelName) => () => store[modelName].ids.length;
+const countItems = (modelName) => () => Object.keys(store[modelName].byId).length;
 const hasExistId = (modelName) => (id) => store[modelName].ids.includes(id);
-const setById = (modelName) => (id, item) => {
-    store[modelName].byId[id] = item;
+const setById = (modelName) => (item) => {
+    const { id } = item;
+    const state = store[modelName];
+    state.byId[id] = item;
+    const hasId = hasExistId(modelName)(id);
+    if (hasId && item.op === operations.remove) {
+        state.ids = state.ids.filter((itemId) => itemId !== id);
+    } else if (!hasId && item.op !== operations.remove) {
+        state.ids.push(id);
+    }
 };
 const loadAsIs = (modelName) => (data) => {
     try {
-        data.forEach((item) => {
-            const { id } = item;
-            const nextItem = { ...item };
-            if (hasExistId(modelName)(id)) {
-                setById(modelName)(id, nextItem);
-            } else {
-                store[modelName].ids.push(id);
-                setById(modelName)(id, nextItem);
-            }
-        });
+        data.forEach(setById(modelName));
         console.info(`[INFO: <store>]: <${modelName}>: {${store[modelName].ids.length}} set success`);
     } catch (e) {
         store[modelName] = { ids: [], byId: {} };
@@ -68,7 +67,10 @@ const getAll = (modelName) => () => new Promise((resolve, reject) => {
     if (!modelStore) {
         return reject(new Error(`No [${modelName}] data found`));
     }
-    return resolve(modelStore.byId);
+    return resolve(modelStore.ids.reduce(
+        (acc, id) => ({ ...acc, [id]: modelStore.byId[id] }),
+        {},
+    ));
 });
 
 const add = (modelName) => async (item) => {
@@ -104,6 +106,24 @@ const update = (modelName) => async (item) => {
     return updatedItem;
 };
 
+const remove = (modelName) => async (itemId) => {
+    const modelStore = store[modelName];
+    const storeItem = modelStore.byId[itemId];
+    if (!storeItem) {
+        throw new Error(`Unable to delete item [${modelName}]: id<${itemId}> absent`);
+    }
+    const deletedItem = {
+        id: itemId,
+        op: operations.remove,
+    };
+    await addData(modelName)(deletedItem);
+    // if above addData resolved success, continue
+    setById(modelName)(deletedItem);
+    // modelStore.byId[deletedItem.id] = { ...storeItem, ...deletedItem };
+    console.info(`[INFO: <store>]: ${modelName}: deleted item id={${deletedItem.id}}`);
+    return deletedItem;
+};
+
 module.exports = {
     initStore: init,
     getAll,
@@ -111,5 +131,6 @@ module.exports = {
     hasExistId,
     add,
     update,
+    remove,
     countItems,
 };

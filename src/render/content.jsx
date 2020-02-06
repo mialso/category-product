@@ -8,7 +8,7 @@ import { MODE_NORMAL, MODE_CREATE } from 'app/form/constants';
 import { CategoryItems } from './category/input';
 import { CategoryPicker } from './category/select';
 import { ProductItem, ProductAction } from './product/item';
-import { ProductInput } from './product/input';
+import { ProductForm } from './product/input';
 
 import './content.css';
 
@@ -21,15 +21,15 @@ export const ProductCard = ({ id }) => (
 );
 
 export const ProductEditor = () => {
-    const { product, mode } = useSelector(formProduct);
+    const { product, mode, isPristine } = useSelector(formProduct);
     const dispatch = useDispatch();
     useEffect(() => () => dispatch(stopFormEdit()), []);
     if (mode === MODE_NORMAL) {
         return null;
     }
     return (
-        <>
-            <ProductInput
+        <div className="ProductEditor">
+            <ProductForm
                 title={`Product ${mode === MODE_CREATE ? 'Create' : 'Edit'}`}
                 onChange={(change) => dispatch(changeFormProduct(change))}
                 product={product}
@@ -39,12 +39,14 @@ export const ProductEditor = () => {
                 onChange={(ids) => dispatch(changeFormProduct({ categoryIds: ids }))}
             />
             <button
+                className="AppButton"
                 type="button"
+                disabled={isPristine}
                 onClick={() => dispatch(submitFormProduct())}
             >
                 Submit
             </button>
-        </>
+        </div>
     );
 };
 
@@ -53,7 +55,7 @@ export const ProductList = ({ ids, startCreateProduct }) => (
         <div className="ProductList-Header">
             <h4>Product List</h4>
             <button
-                className="ProductList-Button"
+                className="AppButton ProductList-Button"
                 type="button"
                 onClick={() => startCreateProduct()}
             >
@@ -61,7 +63,9 @@ export const ProductList = ({ ids, startCreateProduct }) => (
                 product
             </button>
         </div>
-        { ids.map((id) => <ProductCard key={id} id={id} />) }
+        <div className="ProductList-Items">
+            { ids.map((id) => <ProductCard key={id} id={id} />) }
+        </div>
     </div>
 );
 

@@ -18,5 +18,6 @@ module.exports = {
         "import/no-unresolved": "off",
         "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }],
         "jsx-a11y/label-has-associated-control": "off",
+        "react/prop-types": "off",
     },
 };

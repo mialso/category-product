@@ -1,3 +1,4 @@
+import { shallowEqual } from 'react-redux';
 import {
     CREATE_PRODUCT, UPDATE_PRODUCT, submitProduct,
 } from 'product/action';
@@ -6,8 +7,8 @@ import { createItem } from 'product/reducer';
 import { productById } from 'product/selector';
 import { openModal } from 'app/modal';
 import {
-    SUBMIT_FORM_PRODUCT,
-    setFormProduct, formValidationFail,
+    SUBMIT_FORM_PRODUCT, CHANGE_FORM_PRODUCT,
+    setFormProduct, formValidationFail, toggleFormPristine,
 } from './action';
 import { formProduct } from './reducer';
 import { MODE_EDIT, MODE_CREATE } from './constants';
@@ -25,6 +26,19 @@ export const formController = ({ dispatch, getState }, message) => {
             }
             dispatch(setFormProduct({ product, mode }));
             dispatch(openModal());
+            break;
+        }
+        case CHANGE_FORM_PRODUCT: {
+            const { product, isPristine } = formProduct(getState());
+            let sourceProduct;
+            if (product.id) {
+                sourceProduct = productById(product.id)(getState());
+            } else {
+                sourceProduct = createItem();
+            }
+            if (isPristine !== shallowEqual(product, sourceProduct)) {
+                dispatch(toggleFormPristine());
+            }
             break;
         }
         case SUBMIT_FORM_PRODUCT: {

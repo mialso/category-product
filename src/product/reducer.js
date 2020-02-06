@@ -2,9 +2,10 @@ import { compose } from 'redux';
 import { NOT_ASKED, ASKED, READY } from 'app/remote/constants';
 import { SUCCESS } from 'app/remote/api';
 import { USER_LOGOUT } from 'user/action';
+import { DELETE_CATEGORY_API } from 'category/action';
 import {
     READ_PRODUCTS, SET_PRODUCTS, CREATE_PRODUCT_API, UPDATE_PRODUCT_API,
-    SET_PRODUCT_BY_CATEGORY,
+    SET_PRODUCT_BY_CATEGORY, DELETE_PRODUCT_API,
 } from './action';
 
 const initialState = {
@@ -33,9 +34,14 @@ export const updateItem = (item) => (state) => ({
     ...state,
     byId: { ...state.byId, [item.id]: item },
 });
+export const removeItem = ({ id }) => (state) => ({
+    ...state,
+    ids: state.ids.filter((itemId) => itemId !== id),
+    byId: { ...state.byId, [id]: undefined },
+});
 
 export const updateCategoryIdsMap = (item) => (state) => {
-    const { id, categoryIds } = item;
+    const { id, categoryIds = [] } = item;
     // remove any invalid
     const categoryIdsMap = Object.keys(state.byCategoryId).reduce(
         (acc, categoryId) => {
@@ -91,9 +97,20 @@ export const productReducer = (state = initialState, message) => {
             updateCategoryIdsMap(message.payload),
             updateItem(createItem(message.payload)),
         )(state);
+        case DELETE_PRODUCT_API + SUCCESS: return compose(
+            updateCategoryIdsMap(message.payload),
+            removeItem(message.payload),
+        )(state);
         case USER_LOGOUT: {
             return initialState;
         }
+        case DELETE_CATEGORY_API + SUCCESS: return ({
+            ...state,
+            byCategoryId: {
+                ...state.byCategoryId,
+                [message.payload.id]: null,
+            },
+        });
         default: return state;
     }
 };

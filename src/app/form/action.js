@@ -3,6 +3,7 @@ export const CHANGE_FORM_PRODUCT = 'CHANGE_FORM_PRODUCT';
 export const SUBMIT_FORM_PRODUCT = 'SUBMIT_FORM_PRODUCT';
 export const FORM_VALIDATION_FAIL = 'FORM_VALIDATION_FAIL';
 export const STOP_FORM_EDIT = 'STOP_FORM_EDIT';
+export const TOGGLE_FORM_PRISTINE = 'TOGGLE_FORM_PRISTINE';
 
 export const setFormProduct = (data) => ({
     type: SET_FORM_PRODUCT,
@@ -18,3 +19,4 @@ export const formValidationFail = (message) => ({
     error: message,
 });
 export const stopFormEdit = () => ({ type: STOP_FORM_EDIT });
+export const toggleFormPristine = () => ({ type: TOGGLE_FORM_PRISTINE });

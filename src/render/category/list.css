@@ -10,7 +10,7 @@
 }
 
 .CategorySelector {
-    width: 300px;
+    width: 350px;
     flex-direction: column;
 }
 
@@ -27,10 +27,6 @@
     margin-right: 4px;
 }
 
-.Category-Name:hover {
-    cursor: pointer;
-}
-
 .Category-Name:hover > span {
     color: Dodgerblue;
 }
@@ -42,14 +38,6 @@
 
 .Category-Action:hover {
     color: Dodgerblue;
-}
-
-.Category-Button {
-    width: 20px;
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
 }
 
 .CategoryList {
@@ -64,15 +52,8 @@
 }
 
 .CategorySelector-Create {
-    height: 32px;
-    border: none;
-    border-radius: 3px;
-    font-family: 'Roboto';
-    font-size: 14px;
-    line-height: 24px;
-    color: white;
     background-color: green;
-    cursor: pointer;
+    color: white;
 }
 .CategorySelector-Create > span {
     margin-right: 4px;

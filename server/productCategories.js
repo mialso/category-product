@@ -1,32 +1,24 @@
 const { model: { productCategories } } = require('./constants');
 const {
-    findById, getAll, add, update,
+    findById, getAll, add, update, deleteItem, deleteRelations,
 } = require('./relation_store');
 
-const findProductCategories = findById({
+const meta = (key) => ({
     modelName: productCategories,
-    relationName: 'byProductId',
+    relationName: key,
 });
+
+const findProductCategories = findById(meta('byProductId'));
 
 const allProductCategories = getAll(productCategories, 'byProductId');
 const allCategoryProducts = getAll(productCategories, 'byCategoryId');
 
-const addProductCategories = add({
-    modelName: productCategories,
-    relationName: 'byProductId',
-});
-
-const createProductCategories = ({ id, categoryIds }) => addProductCategories({
+const createProductCategories = ({ id, categoryIds }) => add(meta('byProductId'))({
     id,
     itemIds: categoryIds,
 });
 
-const editProductCategories = update({
-    modelName: productCategories,
-    relationName: 'byProductId',
-});
-
-const updateProductCategories = ({ id, categoryIds }) => editProductCategories({
+const updateProductCategories = ({ id, categoryIds }) => update(meta('byProductId'))({
     id,
     itemIds: categoryIds,
 });
@@ -37,4 +29,6 @@ module.exports = {
     createProductCategories,
     findProductCategories,
     updateProductCategories,
+    deleteProductCategories: deleteItem(meta('byProductId')),
+    deleteCategoryProducts: deleteRelations(meta('byCategoryId')),
 };

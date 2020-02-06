@@ -1,11 +1,12 @@
 {
-  "name": "category product",
+  "name": "category_product",
   "version": "1.0.0",
   "description": "category product",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "start:server": "node server/index.js",
+    "lint": "eslint src/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "mialso",

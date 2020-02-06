@@ -14,10 +14,11 @@ export const Modal = ({ children }) => {
         <div className="Modal">
             <div className="Modal-Content">
                 <button
+                    className="AppButton-Icon Modal-Close"
                     type="button"
                     onClick={() => dispatch(closeModal())}
                 >
-                    Close
+                    <span className="fas fa-times" />
                 </button>
                 {children}
             </div>

@@ -7,6 +7,8 @@ export const CREATE_CATEGORY = 'CREATE_CATEGORY';
 export const CREATE_CATEGORY_API = 'CREATE_CATEGORY_API';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 export const UPDATE_CATEGORY_API = 'UPDATE_CATEGORY_API';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
+export const DELETE_CATEGORY_API = 'DELETE_CATEGORY_API';
 
 export const SET_CATEGORIES = 'SET_CATEGORIES';
 export const SET_CATEGORY_BYPRODUCT = 'SET_CATEGORY_BYPRODUCT';
@@ -63,6 +65,19 @@ export const updateCategoryApi = (item) => (token) => ({
         token,
         model: CATEGORY_MODEL,
         body: item,
+    },
+});
+export const deleteCategory = (id) => ({
+    type: DELETE_CATEGORY,
+    payload: id,
+});
+export const deleteCategoryApi = (id) => (token) => ({
+    type: DELETE_CATEGORY_API,
+    meta: {
+        callApi: true,
+        endpoint: `/api/${CATEGORY_MODEL}/delete?id=${id}`,
+        token,
+        model: CATEGORY_MODEL,
     },
 });
 

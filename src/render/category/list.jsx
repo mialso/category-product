@@ -43,7 +43,7 @@ export const Category = ({ id, level, isSelectOnly }) => {
             <div className="Category">
                 { (Array.isArray(children) && children.length)
                     ? <button
-                        className="Category-Button"
+                        className="AppButton-Icon"
                         type="button"
                         onClick={() => toggleOpen(!isOpen)}
                     >
@@ -53,7 +53,7 @@ export const Category = ({ id, level, isSelectOnly }) => {
                     </button>
                     : <span className="Category-LeftSpacer" /> }
                 <button
-                    className="Category-Button Category-Name"
+                    className="AppButton-Icon Category-Name"
                     type="button"
                     onClick={() => dispatch(toggleSelectCategory(id))}
                 >
@@ -71,14 +71,14 @@ export const Category = ({ id, level, isSelectOnly }) => {
                         <button
                             type="button"
                             onClick={() => dispatch(updateCategory(id))}
-                            className="Category-Button Category-Action"
+                            className="AppButton-Icon Category-Action"
                         >
                             <i className="fas fa-pen" />
                         </button>
                         <button
                             type="button"
                             onClick={() => dispatch(createCategory({ parentId: id }))}
-                            className="Category-Button Category-Action"
+                            className="AppButton-Icon Category-Action"
                         >
                             <i className="fas fa-plus" />
                         </button>
@@ -98,7 +98,7 @@ export const CategorySelector = () => {
             <div className="CategorySelector-Header">
                 <h4>Category Selector</h4>
                 <button
-                    className="CategorySelector-Create"
+                    className="AppButton CategorySelector-Create"
                     type="button"
                     onClick={handleCreateClick}
                 >
