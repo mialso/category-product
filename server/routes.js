@@ -1,7 +1,12 @@
 const { findUserByName, checkUserName, generateJwt } = require('./user');
 const { allCategories, createCategory, updateCategory } = require('./category');
-const { allProducts, createProduct, updateProduct } = require('./product');
-const { allCategoryProducts, allProductCategories } = require('./productCategories');
+const {
+    allProducts, createProduct, updateProduct, findProduct,
+} = require('./product');
+const {
+    allCategoryProducts, allProductCategories, createProductCategories, findProductCategories,
+    updateProductCategories,
+} = require('./productCategories');
 const { verifyToken } = require('./auth');
 
 function initRoutes(app) {
@@ -20,8 +25,10 @@ function initRoutes(app) {
     app.get(
         '/api/category/all',
         [ verifyToken ],
-        (req, res) => allCategories()
-            .then((categories) => res.status(200).send(categories)),
+        (req, res) => Promise.all([ allCategories(), allCategoryProducts() ])
+            .then(([ categoryMap, productByCategory ]) => res.status(200)
+                .send({ categoryMap, productByCategory }))
+            .catch((error) => res.status(400).send({ error: error.message })),
     );
     app.post(
         '/api/category/create',
@@ -48,14 +55,20 @@ function initRoutes(app) {
         '/api/product/create',
         [ verifyToken ],
         (req, res) => createProduct(req.body)
-            .then((item) => res.status(200).send(item))
+            .then(({ id }) => createProductCategories({ id, categoryIds: req.body.categoryIds }))
+            .then(({ productId }) => Promise.all([ findProduct(productId), findProductCategories(productId) ]))
+            .then(([ productMap, categoriesByProduct ]) => res.status(200)
+                .send({ ...productMap, categoryIds: categoriesByProduct }))
             .catch((error) => res.status(400).send({ error: error.message })),
     );
     app.put(
         '/api/product/update',
         [ verifyToken ],
         (req, res) => updateProduct(req.body)
-            .then((item) => res.status(200).send(item))
+            .then(({ id }) => updateProductCategories({ id, categoryIds: req.body.categoryIds }))
+            .then(({ productId }) => Promise.all([ findProduct(productId), findProductCategories(productId) ]))
+            .then(([ productMap, categoriesByProduct ]) => res.status(200)
+                .send({ ...productMap, categoryIds: categoriesByProduct }))
             .catch((error) => res.status(400).send({ error: error.message })),
     );
     app.get(

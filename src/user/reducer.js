@@ -1,7 +1,7 @@
+import { NOT_ASKED, ASKED, READY } from 'app/remote/constants';
 import {
     USER_SIGNUP, READ_USER, SET_USER,
 } from './action';
-import { NOT_ASKED, ASKED, READY } from '../constants';
 
 /*
 const User = {

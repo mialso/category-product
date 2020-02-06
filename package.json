@@ -1,7 +1,7 @@
 {
-  "name": "velvetech_test_task",
+  "name": "category product",
   "version": "1.0.0",
-  "description": "product catalog",
+  "description": "category product",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",

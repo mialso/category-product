@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     categoryEdited, categoryMode, categoryPath, categoriesByProduct,
-} from './selector';
-import { submitCategory, categoryNormalMode } from './action';
-import { MODE_EDIT, MODE_CREATE } from './constants';
+} from 'category/selector';
+import { submitCategory, categoryNormalMode } from 'category/action';
+import { MODE_EDIT, MODE_CREATE } from 'category/constants';
 
 import './input.css';
 
 export const CategoryActionItem = ({ id, onClick }) => {
     const categoryString = useSelector(categoryPath(id));
     return (
-        <span className="CategoryActionItem">
-            <span className="CategoryActionItem-Name">{categoryString}</span>
+        <span className="CategoryItem CategoryItem-Action">
+            <span className="CategoryItem-Name">{categoryString}</span>
             <button
+                className="CategoryItem-Action--close"
                 onClick={onClick}
                 type="button"
             >
@@ -29,7 +30,7 @@ export const CategoryItems = ({ productId }) => {
         return null;
     }
     return (
-        <div className="ProductItem-Category">
+        <div className="CategoryItemsList">
             { categoryIds.map((catId) => <CategoryItem key={catId} id={catId} />) }
         </div>
     );
@@ -101,7 +102,7 @@ export const CategoryCreate = () => {
     );
 };
 
-export const CategoryModal = () => {
+export const CategoryEditor = () => {
     const mode = useSelector(categoryMode);
     switch (mode) {
         case MODE_EDIT: return (<CategoryEdit />);

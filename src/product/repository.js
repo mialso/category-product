@@ -1,13 +1,15 @@
-import { SUCCESS } from 'remote/api';
-import { closeModal } from 'ui/modal';
+import { SUCCESS } from 'app/remote/api';
+import { ASKED } from 'app/remote/constants';
+import { closeModal } from 'app/modal';
+import { MODE_EDIT, MODE_CREATE } from 'app/form/constants';
 import { withToken } from 'user/repository';
+import { READ_CATEGORIES_API } from 'category/action';
 import {
     READ_PRODUCTS, READ_PRODUCTS_API,
     CREATE_PRODUCT_API, UPDATE_PRODUCT_API, SUBMIT_PRODUCT,
     readProductsApi, setProducts, createProductApi, updateProductApi,
+    setProductByCategory,
 } from './action';
-import { ASKED } from '../constants';
-import { MODE_EDIT, MODE_CREATE } from './constants';
 
 export function productData({ dispatch, getState }, message) {
     switch (message.type) {
@@ -22,9 +24,12 @@ export function productData({ dispatch, getState }, message) {
             dispatch(setProducts(message.payload));
             break;
         }
+        case READ_CATEGORIES_API + SUCCESS: {
+            dispatch(setProductByCategory(message.payload.productByCategory));
+            break;
+        }
         case SUBMIT_PRODUCT: {
-            const { mode } = getState().product;
-            const product = message.payload;
+            const { mode, product } = message.payload;
             if (mode === MODE_CREATE) {
                 withToken(dispatch, createProductApi(product));
             }

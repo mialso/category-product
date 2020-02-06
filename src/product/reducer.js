@@ -1,20 +1,17 @@
 import { compose } from 'redux';
-import { SUCCESS } from 'remote/api';
+import { NOT_ASKED, ASKED, READY } from 'app/remote/constants';
+import { SUCCESS } from 'app/remote/api';
 import { USER_LOGOUT } from 'user/action';
 import {
-    READ_PRODUCTS, SET_PRODUCTS, CREATE_PRODUCT, CREATE_PRODUCT_API,
-    PRODUCT_NORMAL_MODE, UPDATE_PRODUCT, UPDATE_PRODUCT_API,
+    READ_PRODUCTS, SET_PRODUCTS, CREATE_PRODUCT_API, UPDATE_PRODUCT_API,
+    SET_PRODUCT_BY_CATEGORY,
 } from './action';
-import { NOT_ASKED, ASKED, READY } from '../constants';
-import { MODE_EDIT, MODE_CREATE, MODE_NORMAL } from './constants';
 
 const initialState = {
     ids: [],
     byId: {},
-    categoriesByProduct: {},
     dataStatus: NOT_ASKED,
-    mode: MODE_NORMAL,
-    edit: {},
+    byCategoryId: {},
 };
 
 export const createItem = (data = {}) => ({
@@ -37,19 +34,42 @@ export const updateItem = (item) => (state) => ({
     byId: { ...state.byId, [item.id]: item },
 });
 
-export const switchMode = (mode) => (state) => ({ ...state, mode });
-
-export const setEditItem = (itemId, item) => (state) => ({
-    ...state,
-    edit: item || state.byId[itemId],
-});
-export const cleanEditItem = (state) => ({ ...state, edit: {} });
+export const updateCategoryIdsMap = (item) => (state) => {
+    const { id, categoryIds } = item;
+    // remove any invalid
+    const categoryIdsMap = Object.keys(state.byCategoryId).reduce(
+        (acc, categoryId) => {
+            if (categoryIds.includes(categoryId)) {
+                return acc;
+            }
+            return {
+                ...acc,
+                [categoryId]: state.byCategoryId[categoryId]
+                    .filter((productId) => productId !== id),
+            };
+        },
+        state.byCategoryId,
+    );
+    // add any new
+    return {
+        ...state,
+        byCategoryId: categoryIds.reduce(
+            (acc, categoryId) => {
+                if (acc[categoryId].includes(id)) {
+                    return acc;
+                }
+                return { ...acc, [categoryId]: acc[categoryId].concat(id) };
+            },
+            categoryIdsMap,
+        ),
+    };
+};
 
 export const productReducer = (state = initialState, message) => {
     switch (message.type) {
         case READ_PRODUCTS: return { ...state, dataStatus: ASKED };
         case SET_PRODUCTS: {
-            const { productMap, categoriesByProduct } = message.payload;
+            const { productMap } = message.payload;
             const ids = Object.keys(productMap);
             return {
                 ...state,
@@ -59,28 +79,17 @@ export const productReducer = (state = initialState, message) => {
                     [productId]: createItem(productMap[productId]),
                 }), { ...state.byId }),
                 dataStatus: READY,
-                categoriesByProduct,
             };
         }
-        case CREATE_PRODUCT: return compose(
-            switchMode(MODE_CREATE),
-            setEditItem(null, createItem(message.payload)),
-        )(state);
-        case CREATE_PRODUCT_API + SUCCESS: return compose(
-            switchMode(MODE_NORMAL),
-            addItem(createItem(message.payload)),
-        )(state);
-        case UPDATE_PRODUCT: return compose(
-            switchMode(MODE_EDIT),
-            setEditItem(message.payload),
-        )(state);
+        case SET_PRODUCT_BY_CATEGORY: {
+            return { ...state, byCategoryId: message.payload };
+        }
+        case CREATE_PRODUCT_API + SUCCESS: {
+            return addItem(createItem(message.payload))(state);
+        }
         case UPDATE_PRODUCT_API + SUCCESS: return compose(
-            switchMode(MODE_NORMAL),
+            updateCategoryIdsMap(message.payload),
             updateItem(createItem(message.payload)),
-        )(state);
-        case PRODUCT_NORMAL_MODE: return compose(
-            switchMode(MODE_NORMAL),
-            cleanEditItem,
         )(state);
         case USER_LOGOUT: {
             return initialState;

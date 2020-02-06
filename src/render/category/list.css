@@ -9,8 +9,8 @@
     visibility: visible;
 }
 
-.Category-Root {
-    max-width: 300px;
+.CategorySelector {
+    width: 300px;
     flex-direction: column;
 }
 
@@ -54,4 +54,26 @@
 
 .CategoryList {
     flex: 1;
+}
+
+.CategorySelector-Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+.CategorySelector-Create {
+    height: 32px;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Roboto';
+    font-size: 14px;
+    line-height: 24px;
+    color: white;
+    background-color: green;
+    cursor: pointer;
+}
+.CategorySelector-Create > span {
+    margin-right: 4px;
 }

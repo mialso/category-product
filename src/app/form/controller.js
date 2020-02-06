@@ -1,11 +1,10 @@
 import {
-    CREATE_PRODUCT, UPDATE_PRODUCT,
-    submitProduct,
+    CREATE_PRODUCT, UPDATE_PRODUCT, submitProduct,
 } from 'product/action';
 import { validator } from 'product/validation';
 import { createItem } from 'product/reducer';
 import { productById } from 'product/selector';
-import { openModal, closeModal } from 'ui/modal';
+import { openModal } from 'app/modal';
 import {
     SUBMIT_FORM_PRODUCT,
     setFormProduct, formValidationFail,
@@ -29,7 +28,7 @@ export const formController = ({ dispatch, getState }, message) => {
             break;
         }
         case SUBMIT_FORM_PRODUCT: {
-            const product = formProduct(getState());
+            const { mode, product } = formProduct(getState());
             // TODO - go with validator keys, instead of input object
             const productValidator = Object.keys(product).reduce(
                 (acc, key) => {
@@ -58,7 +57,10 @@ export const formController = ({ dispatch, getState }, message) => {
                 dispatch(formValidationFail(Object.keys(productValidator.errors).join(', ')));
                 break;
             }
-            dispatch(submitProduct(productValidator.values));
+            dispatch(submitProduct({
+                product: productValidator.values,
+                mode,
+            }));
             break;
         }
         default: break;

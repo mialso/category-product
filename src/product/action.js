@@ -6,8 +6,10 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const CREATE_PRODUCT_API = 'CREATE_PRODUCT_API';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const UPDATE_PRODUCT_API = 'UPDATE_PRODUCT_API';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const SET_PRODUCT_BY_CATEGORY = 'SET_PRODUCT_BY_CATEGORY';
 export const SUBMIT_PRODUCT = 'SUBMIT_PRODUCT';
 
 export const PRODUCT_NORMAL_MODE = 'PRODUCT_NORMAL_MODE';
@@ -55,10 +57,19 @@ export const updateProductApi = (item) => (token) => ({
         body: item,
     },
 });
+export const deleteProduct = (id) => ({
+    type: DELETE_PRODUCT,
+    payload: id,
+    error: 'NOT IMPLEMENTED YET',
+});
 
 export const setProducts = (products) => ({
     type: SET_PRODUCTS,
     payload: products,
+});
+export const setProductByCategory = (categoryProducts) => ({
+    type: SET_PRODUCT_BY_CATEGORY,
+    payload: categoryProducts,
 });
 export const submitProduct = (item) => ({
     type: SUBMIT_PRODUCT,

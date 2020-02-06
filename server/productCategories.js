@@ -1,18 +1,40 @@
 const { model: { productCategories } } = require('./constants');
-const { findById, getAll, add, update } = require('./store');
+const {
+    findById, getAll, add, update,
+} = require('./relation_store');
 
-const findProductCategories = findById(productCategories);
+const findProductCategories = findById({
+    modelName: productCategories,
+    relationName: 'byProductId',
+});
 
 const allProductCategories = getAll(productCategories, 'byProductId');
 const allCategoryProducts = getAll(productCategories, 'byCategoryId');
 
-const categoriesByProduct = (req) => {
-    debugger;
-    return findProductCategories('product_1');
-};
+const addProductCategories = add({
+    modelName: productCategories,
+    relationName: 'byProductId',
+});
+
+const createProductCategories = ({ id, categoryIds }) => addProductCategories({
+    id,
+    itemIds: categoryIds,
+});
+
+const editProductCategories = update({
+    modelName: productCategories,
+    relationName: 'byProductId',
+});
+
+const updateProductCategories = ({ id, categoryIds }) => editProductCategories({
+    id,
+    itemIds: categoryIds,
+});
 
 module.exports = {
     allCategoryProducts,
     allProductCategories,
-    categoriesByProduct,
+    createProductCategories,
+    findProductCategories,
+    updateProductCategories,
 };

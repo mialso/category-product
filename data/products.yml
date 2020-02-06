@@ -9,3 +9,39 @@ product: !!seq
     - !!map {name: fresh meat, price: 34, expireDate: 1582502400, id: product_3, op: UPDATE}
     - !!map {name: fresh meat, price: 34, expireDate: 1586822400, id: product_3, op: UPDATE}
     - !!map {name: fresh meat, price: 34, expireDate: 1586908800, id: product_3, op: UPDATE}
+    - !!map {name: super juice, price: 7, expireDate: 1587600000, id: product_6, op: CREATE}
+    - !!map {name: fast juice, price: 5, expireDate: 1593043200, id: product_7, op: CREATE}
+    - !!map {name: mega juice, price: 12, expireDate: 1582761600, id: product_8, op: CREATE}
+    - !!map {name: some juice, price: 9, expireDate: 1585180800, id: product_9, op: CREATE}
+    - !!map {name: next juice, price: 9, expireDate: 1582761600, id: product_10, op: CREATE}
+    - !!map {name: awesome juice, price: 17, expireDate: 1585180800, id: product_11, op: CREATE}
+    - !!map {name: some milk, price: 3, expireDate: 1582243200, id: product_12, op: CREATE}
+    - !!map {id: product_2, name: my milk, expireDate: 1581552000, price: 6, op: UPDATE}
+    - !!map {id: product_2, name: my milk, expireDate: 1581552000, price: 6, op: UPDATE}
+    - !!map {id: product_2, name: my milk, expireDate: 1581552000, price: 6, op: UPDATE}
+    - !!map {id: product_2, name: my milk, expireDate: 1581552000, price: 6, op: UPDATE}
+    - !!map {id: product_1, name: cheese, expireDate: 1582156800, price: 10, op: UPDATE}
+    - !!map {name: fresh meat, price: 34, expireDate: 1586908800, id: product_3, op: UPDATE}
+    - !!map {name: frozen meat, price: 29, expireDate: 1594857600, id: product_4, op: UPDATE}
+    - !!map {name: fresh chicken meatt, price: 24, expireDate: 1581379200, id: product_5, op: UPDATE}
+    - !!map {name: fresh chicken meat, price: 24, expireDate: 1581379200, id: product_5, op: UPDATE}
+    - !!map {name: fresh chicken meattt, price: 24, expireDate: 1581379200, id: product_5, op: UPDATE}
+    - !!map {name: fresh chicken meattt, price: 24, expireDate: 1581379200, id: product_5, op: UPDATE}
+    - !!map {name: fresh chicken meattt, price: 24, expireDate: 1581379200, id: product_5, op: UPDATE}
+    - !!map {name: fresh chicken meattt, price: 24, expireDate: 1581379200, id: product_5, op: UPDATE}
+    - !!map {name: fast juice, price: 5, expireDate: 1593043200, id: product_7, op: UPDATE}
+    - !!map {name: fast juice, price: 5, expireDate: 1593043200, id: product_7, op: UPDATE}
+    - !!map {name: next juice, price: 9, expireDate: 1582761600, id: product_10, op: UPDATE}
+    - !!map {id: product_1, name: cheese, expireDate: 1582156800, price: 102, op: UPDATE}
+    - !!map {id: product_1, name: cheese, expireDate: 1582156800, price: 444, op: UPDATE}
+    - !!map {id: product_1, name: cheese, expireDate: 1582156800, price: 444, op: UPDATE}
+    - !!map {name: fresh chicken meattt, price: 24, expireDate: 1581379200, id: product_5, op: UPDATE}
+    - !!map {name: frozen meat, price: 29, expireDate: 1594857600, id: product_4, op: UPDATE}
+    - !!map {name: frozen meat, price: 29, expireDate: 1594857600, id: product_4, op: UPDATE}
+    - !!map {id: product_1, name: cheese, expireDate: 1582156800, price: 444, op: UPDATE}
+    - !!map {name: frozen meat, price: 29, expireDate: 1594857600, id: product_4, op: UPDATE}
+    - !!map {id: product_1, name: cheese, expireDate: 1582156800, price: 444, op: UPDATE}
+    - !!map {id: product_1, name: cheese, expireDate: 1582156800, price: 444, op: UPDATE}
+    - !!map {name: fresh meat, price: 34, expireDate: 1589932800, id: product_3, op: UPDATE}
+    - !!map {id: product_1, name: cheese, expireDate: 1582243200, price: 444, op: UPDATE}
+    - !!map {id: product_1, name: cheese, expireDate: 1582243200, price: 444, op: UPDATE}

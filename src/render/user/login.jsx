@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { userLogin, userLogout } from './action';
-import { currentUser } from './selector';
+import { userLogin, userLogout } from 'user/action';
+import { currentUser } from 'user/selector';
 import { withRegularUser, withGuestUser } from './remote';
 
 import './login.css';

@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import classnames from 'classnames';
-import { EMPTY, PARTIAL, FULL } from 'tree/selectable';
+import { EMPTY, PARTIAL, FULL } from 'app/tree/selectable';
+import { NOT_ASKED, READY } from 'app/remote/constants';
 import {
     readCategories, createCategory, updateCategory, toggleSelectCategory,
-} from './action';
-import { NOT_ASKED, READY } from '../constants';
-import { categoryState, categoryById, categoryRootNodeIds } from './selector';
+} from 'category/action';
+import { categoryState, categoryById, categoryRootNodeIds } from 'category/selector';
 
 import './list.css';
 
@@ -89,20 +89,24 @@ export const Category = ({ id, level, isSelectOnly }) => {
     );
 };
 
-export const CategoryList = () => {
+export const CategorySelector = () => {
     const categories = useSelector(categoryRootNodeIds, shallowEqual);
     const dispatch = useDispatch();
     const handleCreateClick = useCallback(() => dispatch(createCategory({ parentId: null })));
     return (
-        <div className="Category Category-Root">
+        <div className="CategorySelector">
+            <div className="CategorySelector-Header">
+                <h4>Category Selector</h4>
+                <button
+                    className="CategorySelector-Create"
+                    type="button"
+                    onClick={handleCreateClick}
+                >
+                    <span className="fas fa-plus" />
+                    root category
+                </button>
+            </div>
             <List itemIds={categories} level={0} />
-            <button
-                type="button"
-                onClick={handleCreateClick}
-                className="Category-Create"
-            >
-                Create root Category
-            </button>
         </div>
     );
 };

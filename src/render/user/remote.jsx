@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { readUser } from './action';
-import { NOT_ASKED, READY } from '../constants';
-import { REGULAR, GUEST } from './constants';
+import { readUser } from 'user/action';
+import { REGULAR, GUEST } from 'user/constants';
+import { NOT_ASKED, READY } from 'app/remote/constants';
 
 export const mapStateToProps = ({ user }) => user;
 

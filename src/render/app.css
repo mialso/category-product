@@ -27,3 +27,12 @@
     align-items: flex-start;
     flex: 1;
 }
+
+.AppProduct {
+    display: flex;
+    justify-content: space-between;
+}
+
+.AppProduct > .CategoryItemsList {
+    flex: 1;
+}

@@ -1,14 +1,14 @@
-import { SUCCESS } from 'remote/api';
-import { openModal, closeModal } from 'ui/modal';
+import { SUCCESS } from 'app/remote/api';
+import { ASKED } from 'app/remote/constants';
+import { openModal, closeModal } from 'app/modal';
 import { withToken } from 'user/repository';
+import { READ_PRODUCTS_API } from 'product/action';
 import {
     READ_CATEGORIES, READ_CATEGORIES_API, CREATE_CATEGORY, UPDATE_CATEGORY,
     SUBMIT_CATEGORY, CREATE_CATEGORY_API, UPDATE_CATEGORY_API,
     readCategoriesApi, setCategories, createCategoryApi, updateCategoryApi,
     setCategoryByProduct,
 } from './action';
-import { READ_PRODUCTS_API } from '../product/action';
-import { ASKED } from '../constants';
 import { MODE_EDIT, MODE_CREATE } from './constants';
 
 const TIMEOUT = 0;
@@ -23,7 +23,7 @@ export function categoryData({ dispatch, getState }, message) {
             break;
         }
         case READ_CATEGORIES_API + SUCCESS: {
-            setTimeout(() => dispatch(setCategories(message.payload)), TIMEOUT);
+            setTimeout(() => dispatch(setCategories(message.payload.categoryMap)), TIMEOUT);
             break;
         }
         case READ_PRODUCTS_API + SUCCESS: {

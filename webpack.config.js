@@ -22,7 +22,7 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            outputPath: 'fonts/',
+                            outputPath: 'dist/fonts/',
                         },
                     },
                 ],
@@ -34,10 +34,8 @@ module.exports = {
         alias: {
             user: path.resolve(__dirname, './src/user'),
             category: path.resolve(__dirname, './src/category'),
-            remote: path.resolve(__dirname, './src/app/remote'),
-            ui: path.resolve(__dirname, './src/app'),
-            tree: path.resolve(__dirname, './src/app/tree'),
             product: path.resolve(__dirname, './src/product'),
+            app: path.resolve(__dirname, './src/app'),
         },
     },
     output: {

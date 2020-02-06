@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
-import { categoryRootNodeIds, categoryById } from './selector';
+import { categoryRootNodeIds, categoryById } from 'category/selector';
 import { CategoryActionItem } from './input';
 
 import './select.css';
@@ -35,9 +35,9 @@ export const CategorySelect = ({ selectedIds, pickCategory }) => {
 
 export const CategoryPicker = ({ selectedIds, onChange }) => {
     return (
-        <div>
+        <div className="CategoryPicker">
             <h4>Category Picker</h4>
-            <div>
+            <div className="CategoryPicker-Items">
                 { selectedIds.map((id) => <CategoryActionItem key={id} id={id} onClick={() => onChange(selectedIds.filter((sId) => sId !== id))} />) }
             </div>
             <CategorySelect

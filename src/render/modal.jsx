@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { closeModal } from 'ui/modal';
+import { closeModal } from 'app/modal';
 
-import './component.css';
+import './modal.css';
 
 export const Modal = ({ children }) => {
     const { isOpen } = useSelector(({ modal }) => modal);

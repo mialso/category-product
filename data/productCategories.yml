@@ -1,2 +1,35 @@
 productCategories: !!seq
     - !!map { productId: product_1, categoryIds: [ category_13, category_3 ], op: CREATE }
+    - !!map {productId: product_8, categoryIds: [category_9, category_11, category_14], op: CREATE}
+    - !!map {productId: product_9, categoryIds: [category_10], op: CREATE}
+    - !!map {productId: product_10, categoryIds: [category_7], op: CREATE}
+    - !!map {productId: product_11, categoryIds: [category_14, category_9], op: CREATE}
+    - !!map {productId: product_12, categoryIds: [category_13, category_9], op: CREATE}
+    - !!map {productId: product_2, categoryIds: [category_3], op: CREATE}
+    - !!map {productId: product_2, categoryIds: [category_3, category_10], op: UPDATE}
+    - !!map {productId: product_2, categoryIds: [category_3, category_10, category_11], op: UPDATE}
+    - !!map {productId: product_1, categoryIds: [category_13], op: UPDATE}
+    - !!map {productId: product_3, categoryIds: [category_17], op: CREATE}
+    - !!map {productId: product_4, categoryIds: [category_3], op: CREATE}
+    - !!map {productId: product_5, categoryIds: [], op: CREATE}
+    - !!map {productId: product_5, categoryIds: [], op: UPDATE}
+    - !!map {productId: product_5, categoryIds: [category_14], op: UPDATE}
+    - !!map {productId: product_5, categoryIds: [], op: UPDATE}
+    - !!map {productId: product_5, categoryIds: [category_14, category_7], op: UPDATE}
+    - !!map {productId: product_5, categoryIds: [category_14, category_7, category_16], op: UPDATE}
+    - !!map {productId: product_7, categoryIds: [category_10], op: CREATE}
+    - !!map {productId: product_7, categoryIds: [category_10, category_11], op: UPDATE}
+    - !!map {productId: product_10, categoryIds: [category_7, category_10], op: UPDATE}
+    - !!map {productId: product_1, categoryIds: [category_13], op: UPDATE}
+    - !!map {productId: product_1, categoryIds: [category_13], op: UPDATE}
+    - !!map {productId: product_1, categoryIds: [category_13], op: UPDATE}
+    - !!map {productId: product_5, categoryIds: [category_14, category_7, category_16, category_3, category_4, category_10, category_11, category_17, category_13], op: UPDATE}
+    - !!map {productId: product_4, categoryIds: [], op: UPDATE}
+    - !!map {productId: product_4, categoryIds: [category_18], op: UPDATE}
+    - !!map {productId: product_1, categoryIds: [category_13, category_18], op: UPDATE}
+    - !!map {productId: product_4, categoryIds: [], op: UPDATE}
+    - !!map {productId: product_1, categoryIds: [category_13], op: UPDATE}
+    - !!map {productId: product_1, categoryIds: [category_13, category_18], op: UPDATE}
+    - !!map {productId: product_3, categoryIds: [category_17, category_4], op: UPDATE}
+    - !!map {productId: product_1, categoryIds: [category_13, category_18], op: UPDATE}
+    - !!map {productId: product_1, categoryIds: [category_13], op: UPDATE}

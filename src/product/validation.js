@@ -41,7 +41,8 @@ export const validator = {
         return { isValid: true, message: '', price: priceNum };
     },
     expireDate: (data) => {
-        const utcMseconds = parser.expireDate(data);
+        // const utcMseconds = parser.expireDate(data);
+        const utcMseconds = data * 1000;
         if (Number.isNaN(utcMseconds)) {
             return {
                 isValid: false,
@@ -55,6 +56,6 @@ export const validator = {
                 message: 'Please, use date greater than now for Product::[expireDate]',
             };
         }
-        return { isValid: true, message: '', expireDate: utcMseconds / 1000 };
+        return { isValid: true, message: '', expireDate: data };
     },
 };

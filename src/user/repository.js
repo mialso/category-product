@@ -1,10 +1,10 @@
-import { SUCCESS } from 'remote/api';
+import { SUCCESS } from 'app/remote/api';
+import { ASKED } from 'app/remote/constants';
 import {
     READ_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
     readUserApi, userLoginApi, setUser,
 } from './action';
 import { GUEST } from './constants';
-import { ASKED } from '../constants';
 
 const TIMEOUT = 0;
 

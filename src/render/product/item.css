@@ -1,0 +1,30 @@
+.ProductItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ProductItem-Content {
+    display: flex;
+    flex-direction: column;
+}
+
+.ProductItem-Category > * {
+    margin: 4px;
+}
+
+.ProductAction {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ProductAction-Button {
+    display: flex;
+    justify-content: flex-start;
+    margin: 2px;
+}
+
+.ProductAction-Button > span {
+    margin-right: 4px;
+}

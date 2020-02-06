@@ -1,12 +1,12 @@
 import React from 'react';
-import { UserLogin, UserMenu } from 'user/login';
-import { RequireUser, RegisteredUser } from 'user/remote';
-import { RequireCategories, CategoryList } from 'category/list';
-import { CategoryModal } from 'category/input';
-import { RequireProducts } from 'product/list';
-import { Modal } from 'ui/modal/component';
+import { UserLogin, UserMenu } from './user/login';
+import { RequireUser, RegisteredUser } from './user/remote';
+import { RequireCategories, CategorySelector } from './category/list';
+import { CategoryEditor } from './category/input';
+import { RequireProducts } from './product/list';
+import { Modal } from './modal';
 import { ProgressBar, UnseenError } from './common';
-import { ProductList, ProductEditor } from './product';
+import { ConnectedProductList, ProductEditor } from './content';
 
 import './app.css';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -25,14 +25,14 @@ export const App = () => (
             <RegisteredUser>
                 <div className="App-Content">
                     <RequireCategories>
-                        <CategoryList />
+                        <CategorySelector />
                         <RequireProducts>
-                            <ProductList />
+                            <ConnectedProductList />
                         </RequireProducts>
                     </RequireCategories>
                 </div>
                 <Modal>
-                    <CategoryModal />
+                    <CategoryEditor />
                     <ProductEditor />
                 </Modal>
             </RegisteredUser>

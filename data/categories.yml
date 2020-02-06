@@ -29,3 +29,9 @@ category: !!seq
     - !!map {name: chicken, parentId: category_12, id: category_16, op: CREATE}
     - !!map {name: other, parentId: category_12, id: category_17, op: CREATE}
     - !!map {name: diary, parentId: category_2, id: category_13, op: UPDATE}
+    - !!map {name: diaryy, parentId: category_2, id: category_13, op: UPDATE}
+    - !!map {name: juice, parentId: category_2, id: category_10, op: UPDATE}
+    - !!map {id: category_4, name: two, parentId: category_1, op: UPDATE}
+    - !!map {name: bakery, parentId: category_2, id: category_11, op: UPDATE}
+    - !!map {name: diary, parentId: category_2, id: category_13, op: UPDATE}
+    - !!map {name: rootcat, parentId: null, id: category_18, op: CREATE}

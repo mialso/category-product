@@ -4,8 +4,10 @@ const cors = require('cors');
 
 const initRoutes = require('./routes');
 const { initStore } = require('./store');
+const { initRelationStore } = require('./relation_store');
 
 const PORT = 5005;
+const successStartHander = () => console.info(`Server is running: http://localhost:${PORT}/`);
 const app = express();
 
 // Configure the app
@@ -14,6 +16,5 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 initRoutes(app);
-initStore();
-
-app.listen(PORT, () => console.info(`Server is running: http://localhost:${PORT}/`));
+Promise.all([ initStore(), initRelationStore() ])
+    .then(() => app.listen(PORT, successStartHander));

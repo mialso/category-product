@@ -24,3 +24,22 @@
     border-radius: 4px;
     background-color: lightgray;
 }
+
+.CategoryItemsList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.CategoryItemsList > .CategoryItem {
+    margin: 4px;
+}
+
+.CategoryItem-Action--close {
+    width: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}

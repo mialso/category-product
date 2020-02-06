@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { productById } from './selector';
-import { updateProduct } from './action';
+import { useSelector, useDispatch } from 'react-redux';
+import { productById } from 'product/selector';
+import { updateProduct, deleteProduct } from 'product/action';
 
 import './item.css';
 
@@ -31,15 +31,25 @@ export const ProductItem = ({ id }) => {
     );
 };
 
-export const ProductEdit = ({ id }) => {
+export const ProductAction = ({ id }) => {
     const dispatch = useDispatch();
     return (
-        <div className="ProductItem-Action">
+        <div className="ProductAction">
             <button
+                className="ProductAction-Button"
                 type="button"
                 onClick={() => dispatch(updateProduct(id))}
             >
+                <span className="fas fa-pen" />
                 Edit
+            </button>
+            <button
+                className="ProductAction-Button"
+                type="button"
+                onClick={() => dispatch(deleteProduct(id))}
+            >
+                <span className="fas fa-times" />
+                Delete
             </button>
         </div>
     );
