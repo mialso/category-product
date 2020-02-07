@@ -1,3 +1,4 @@
+import { compose } from 'redux';
 // select modes
 export const EMPTY = 'EMPTY';
 export const PARTIAL = 'PARTIAL';
@@ -23,8 +24,8 @@ export const removeSelected = (id) => (state) => ({
     selected: state.selected.filter((itemId) => itemId !== id),
 });
 
-export const toggleSelect = (itemId) => (state) => {
-    const shouldSelect = !state.selected.includes(itemId);
+export const toggleSelect = (itemId, forceMode) => (state) => {
+    const shouldSelect = (forceMode === FULL) || !state.selected.includes(itemId);
     return {
         ...state,
         selected: shouldSelect
@@ -72,4 +73,18 @@ export const toggleParentSelect = (itemId) => (state) => {
         },
     };
     return toggleParentSelect(parentItem.id)(newState);
+};
+
+export const toggleChildSelect = (id) => (state) => {
+    const item = state.byId[id];
+    if (!(Array.isArray(item.children) && item.children.length)) {
+        return state;
+    }
+    return item.children.reduce(
+        (acc, childId) => compose(
+            toggleChildSelect(childId),
+            toggleSelect(childId, item.selectMode),
+        )(acc),
+        state,
+    );
 };

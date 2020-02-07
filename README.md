@@ -1,6 +1,7 @@
 #### product categories
 
 ##### how to run:
+* start both client and server:
 > `npm run start`
 > `npm run start:server`
 
@@ -8,7 +9,7 @@
 
 ###### for login either `mik` or `mak` work fine
 
-#### overview:
+#### client overview:
 
 ##### render: `react`
 

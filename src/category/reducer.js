@@ -5,7 +5,7 @@ import { USER_LOGOUT } from 'user/action';
 import { getTreeFromParentsMap, itemTreeNode, cleanParentChildren } from 'app/tree/tree';
 import {
     stateSelectable, createSelectableFromMap, itemSelectable,
-    toggleParentSelect, toggleSelect, removeSelected,
+    toggleParentSelect, toggleChildSelect, toggleSelect, removeSelected,
 } from 'app/tree/selectable';
 import { CREATE_PRODUCT_API, UPDATE_PRODUCT_API, DELETE_PRODUCT_API } from 'product/action';
 import {
@@ -162,6 +162,7 @@ export const categoryReducer = (state = initialState, message) => {
             return initialState;
         }
         case TOGGLE_SELECT_CATEGORY: return compose(
+            toggleChildSelect(message.payload),
             toggleParentSelect(message.payload),
             toggleSelect(message.payload),
         )(state);
