@@ -1,4 +1,4 @@
-import { userData } from 'user/repository';
+// import { userData } from 'user/repository';
 import { categoryData } from 'category/repository';
 import { productData } from 'product/repository';
 import { api } from 'app/remote/api';
@@ -12,7 +12,7 @@ export function connectMiddleware(controller) {
 }
 
 const middlewares = [
-    userData,
+    // userData,
     categoryData,
     productData,
     api,
