@@ -27,7 +27,7 @@ export const apiSuccess = (base, payload) => ({
 });
 export const apiFail = (base, error) => ({
     type: `${base.type}_FAIL`,
-    error,
+    error: error || 'UNKNOWN_ERROR',
     meta: {
         apiStatus: FAIL,
         model: base.meta.model,

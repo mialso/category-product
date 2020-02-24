@@ -14,14 +14,14 @@ function verifyToken(req, res, next) {
     const token = getTokenFromHeaders(req);
     if (!token) {
         return res.status(401).send({
-            message: 'no valid authentication credentials',
+            error: 'no valid authentication credentials',
         });
     }
 
     return jwt.verify(token, jwtSecret, (err, decoded) => {
         if (err) {
             return res.status(401).send({
-                message: 'authentication credentials are invalid',
+                error: 'authentication credentials are invalid',
             });
         }
         req.userName = decoded.name;
