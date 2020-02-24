@@ -36,19 +36,18 @@ export function* userSaga() {
             const loginRun = yield take(USER_LOGIN);
             yield put(userLoginApi(loginRun.payload));
 
-            const loginSuccess = yield take([
+            const loginData = yield take([
                 USER_LOGIN_API + SUCCESS,
                 USER_LOGIN_API + FAIL,
             ]);
 
-            if (loginSuccess.error) {
+            if (!loginData.payload || loginData.error) {
                 continue;
             } else {
-                localStorage.setItem('token', loginSuccess.payload.token);
-                yield put(setUser(loginSuccess.payload.user));
+                localStorage.setItem('token', loginData.payload.token);
+                yield put(setUser(loginData.payload.user));
             }
         }
-
         // LOGOUT
         yield take(USER_LOGOUT)
 

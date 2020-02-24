@@ -1,4 +1,4 @@
-import { SUCCESS } from 'app/remote/api';
+import { SUCCESS, FAIL } from 'app/remote/api';
 import { ASKED } from 'app/remote/constants';
 import {
     READ_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
@@ -44,6 +44,7 @@ export function userData({ dispatch, getState }, message) {
             setTimeout(() => dispatch(setUser(message.payload)), TIMEOUT);
             break;
         }
+        case READ_USER_API + FAIL:
         case USER_LOGOUT: {
             localStorage.removeItem('token');
             dispatch(setUser({ name: '', role: GUEST }));
