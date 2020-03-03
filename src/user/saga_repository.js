@@ -2,18 +2,18 @@ import { put, take, select } from 'redux-saga/effects';
 import { SUCCESS, FAIL } from 'app/remote/api';
 import { ASKED, READY } from 'app/remote/constants';
 import {
-    READ_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
+    REQUIRE_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
     readUserApi, userLoginApi, setUser,
 } from './action';
 import { currentUser, currentUserRole } from './selector';
-import { GUEST } from './constants';
+import { GUEST, REGULAR } from './constants';
 
 export function* userSaga() {
     while (true) {
         const user = yield select(currentUser);
-        // INIT
+        // NOTHING
         if (!user) {
-            yield take(READ_USER);
+            yield take(REQUIRE_USER);
             const token = localStorage.getItem('token');
             if (token) {
                 yield put(readUserApi(token));
@@ -29,13 +29,9 @@ export function* userSaga() {
                 yield put(setUser({ name: '', role: GUEST }));
             }
         }
-        // LOGIN
         const role = yield select(currentUserRole);
-        if (!role) {
-            // TODO: is it an error case???
-            continue;
-        }
-        if (role === GUEST) {
+        // GUEST or whatever
+        if (role !== REGULAR) {
             const loginRun = yield take(USER_LOGIN);
             yield put(userLoginApi(loginRun.payload));
 
@@ -51,7 +47,7 @@ export function* userSaga() {
                 yield put(setUser(loginData.payload.user));
             }
         }
-        // LOGOUT
+        // REGULAR
         yield take(USER_LOGOUT)
 
         localStorage.removeItem('token');

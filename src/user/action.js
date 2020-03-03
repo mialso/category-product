@@ -3,7 +3,7 @@ export const USER_LOGIN_API = 'USER_LOGIN_API';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_SIGNUP = 'USER_SIGNUP';
 
-export const READ_USER = 'READ_USER';
+export const REQUIRE_USER = 'REQUIRE_USER';
 export const READ_USER_API = 'READ_USER_API';
 export const SET_USER = 'SET_USER';
 export const CREATE_USER = 'CREATE_USER';
@@ -23,7 +23,7 @@ export const userLoginApi = (name) => ({
         model: 'user',
     },
 });
-export const readUser = () => ({ type: READ_USER });
+export const readUser = () => ({ type: REQUIRE_USER });
 export const readUserApi = (token) => ({
     type: READ_USER_API,
     meta: {

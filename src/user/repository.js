@@ -1,9 +1,9 @@
 import { SUCCESS, FAIL } from 'app/remote/api';
-import { ASKED } from 'app/remote/constants';
 import {
-    READ_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
+    REQUIRE_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
     readUserApi, userLoginApi, setUser,
 } from './action';
+import { currentUser } from './selector';
 import { GUEST } from './constants';
 
 const TIMEOUT = 0;
@@ -19,9 +19,9 @@ export function withToken(dispatch, action) {
 
 export function userData({ dispatch, getState }, message) {
     switch (message.type) {
-        case READ_USER: {
-            const { user } = getState();
-            if (user.dataStatus === ASKED) {
+        case REQUIRE_USER: {
+            const { user } = currentUser(getState());
+            if (!user) {
                 const token = localStorage.getItem('token');
                 if (token) {
                     dispatch(readUserApi(token));
