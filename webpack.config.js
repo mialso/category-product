@@ -36,6 +36,7 @@ module.exports = {
             category: path.resolve(__dirname, './src/category'),
             product: path.resolve(__dirname, './src/product'),
             app: path.resolve(__dirname, './src/app'),
+            type: path.resolve(__dirname, './src/type'),
         },
     },
     output: {

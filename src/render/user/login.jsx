@@ -55,5 +55,5 @@ export const UserLogin = compose(
 
 export const UserMenu = compose(
     withRegularUser,
-    connect(currentUser, { runUserLogout: userLogout }),
+    connect(null, { runUserLogout: userLogout }),
 )(Menu);

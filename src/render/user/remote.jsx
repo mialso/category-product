@@ -2,36 +2,33 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { readUser } from 'user/action';
 import { REGULAR, GUEST } from 'user/constants';
+import { currentUser, currentUserRole, userStatus } from 'user/selector';
 import { NOT_ASKED, READY } from 'app/remote/constants';
 
-export const mapStateToProps = ({ user }) => user;
-
 export const RequireUser = ({ children }) => {
-    const user = useSelector(mapStateToProps);
+    const status = useSelector(userStatus);
     const dispatch = useDispatch();
     useEffect(() => {
-        if (user.dataStatus === NOT_ASKED) {
+        if (status === NOT_ASKED) {
             dispatch(readUser());
         }
     }, []);
-    if (user.dataStatus !== READY) {
+    if (status !== READY) {
         return null;
     }
     return (<>{children}</>);
 };
 
 export const RegularUser = (Component) => {
-    const currentUser = useSelector(({ user }) => user.currentUser);
-    const role = currentUser ? currentUser.role : '';
-    if (role !== REGULAR) {
+    const user = useSelector(currentUser);
+    if (user.role !== REGULAR) {
         return null;
     }
-    return <Component />;
+    return <Component user={user} />;
 };
 
 export const GuestUser = (Component) => {
-    const currentUser = useSelector(({ user }) => user.currentUser);
-    const role = currentUser ? currentUser.role : '';
+    const role = useSelector(currentUserRole);
     if (role !== GUEST) {
         return null;
     }
@@ -39,8 +36,8 @@ export const GuestUser = (Component) => {
 };
 
 export const RegisteredUser = ({ children }) => {
-    const currentUser = useSelector(({ user }) => user.currentUser);
-    if (currentUser.role !== REGULAR) {
+    const role = useSelector(currentUserRole);
+    if (role !== REGULAR) {
         return null;
     }
     return (<>{children}</>);

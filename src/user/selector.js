@@ -1,2 +1,9 @@
-export const currentUser = (state) => ({ user: state.user.currentUser });
-export const currentUserRole = (state) => state.user.currentUser ? state.user.currentUser.role : '';
+export const currentUser = (state) => {
+    const { Just: user } = state.user.currentUser;
+    return user || null;
+};
+export const currentUserRole = (state) => {
+    const { Just: user } = state.user.currentUser;
+    return user.role || '';
+};
+export const userStatus = (state) => state.user.dataStatus;
