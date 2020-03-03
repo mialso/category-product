@@ -2,18 +2,18 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { readUser } from 'user/action';
 import { REGULAR, GUEST } from 'user/constants';
-import { currentUser, currentUserRole, userStatus } from 'user/selector';
+import { currentUser, currentUserRole } from 'user/selector';
 import { NOT_ASKED, READY } from 'app/remote/constants';
 
 export const RequireUser = ({ children }) => {
-    const status = useSelector(userStatus);
+    const user = useSelector(currentUser);
     const dispatch = useDispatch();
     useEffect(() => {
-        if (status === NOT_ASKED) {
+        if (!user) {
             dispatch(readUser());
         }
     }, []);
-    if (status !== READY) {
+    if (!user) {
         return null;
     }
     return (<>{children}</>);

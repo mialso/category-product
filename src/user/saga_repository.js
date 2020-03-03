@@ -5,16 +5,15 @@ import {
     READ_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
     readUserApi, userLoginApi, setUser,
 } from './action';
-import { currentUserRole } from './selector';
+import { currentUser, currentUserRole } from './selector';
 import { GUEST } from './constants';
 
 export function* userSaga() {
     while (true) {
-        const { user } = yield select();
+        const user = yield select(currentUser);
         // INIT
-        if (user.dataStatus !== READY) {
+        if (!user) {
             yield take(READ_USER);
-            const { user } = yield select();
             const token = localStorage.getItem('token');
             if (token) {
                 yield put(readUserApi(token));
@@ -32,6 +31,10 @@ export function* userSaga() {
         }
         // LOGIN
         const role = yield select(currentUserRole);
+        if (!role) {
+            // TODO: is it an error case???
+            continue;
+        }
         if (role === GUEST) {
             const loginRun = yield take(USER_LOGIN);
             yield put(userLoginApi(loginRun.payload));
