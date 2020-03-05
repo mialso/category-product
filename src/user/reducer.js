@@ -1,7 +1,8 @@
 import { Just, Nothing } from 'type/Maybe';
 import {
-    USER_SIGNUP, READ_USER, SET_USER,
+    USER_SIGNUP, READ_USER, SET_USER, SET_GUEST_USER,
 } from './action';
+import { GUEST } from './constants';
 
 /*
 const User = {
@@ -9,6 +10,8 @@ const User = {
     role: '',
 };
 */
+
+const GUEST_USER = { name: '', role: GUEST };
 
 const initState = {
     currentUser: Nothing(),
@@ -21,9 +24,11 @@ export function userReducer(state = initState, action = {}) {
         }
         case SET_USER: {
             return {
+                ...state,
                 currentUser: Just(action.payload),
             };
         }
+        case SET_GUEST_USER: return ({ ...state, currentUser: Just(GUEST_USER) });
         default: return state;
     }
 }

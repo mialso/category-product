@@ -3,10 +3,20 @@ import { SUCCESS, FAIL } from 'app/remote/api';
 import { ASKED, READY } from 'app/remote/constants';
 import {
     REQUIRE_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
-    readUserApi, userLoginApi, setUser,
+    readUserApi, userLoginApi, setUser, setGuestUser,
 } from './action';
 import { currentUser, currentUserRole } from './selector';
-import { GUEST, REGULAR } from './constants';
+import { REGULAR } from './constants';
+
+/*
+handle(REQUIRE_USER).if(!currentUser)
+    .causes(setGuestUser).if(!token)
+    .causes(readUserApi).if(token).then
+        .handle(SUCCESS)
+            .causes(setUser).with(payload).otherwise
+        .handle(FAIL)
+            .causes(setGuestUser);
+ */
 
 export function* userSaga() {
     while (true) {
@@ -16,17 +26,18 @@ export function* userSaga() {
             yield take(REQUIRE_USER);
             const token = localStorage.getItem('token');
             if (token) {
+                // REQUIRE_USER causes READ_USER_API if (!user && token)
                 yield put(readUserApi(token));
 
                 const userDto = yield take([READ_USER_API + SUCCESS, READ_USER_API + FAIL]);
                 if (!userDto.payload || userDto.error) {
                     localStorage.removeItem('token');
-                    yield put(setUser({ name: '', role: GUEST }));
+                    yield put(setGuestUser());
                 } else {
                     yield put(setUser(userDto.payload));
                 }
             } else {
-                yield put(setUser({ name: '', role: GUEST }));
+                yield put(setGuestUser());
             }
         }
         const role = yield select(currentUserRole);
@@ -51,6 +62,6 @@ export function* userSaga() {
         yield take(USER_LOGOUT)
 
         localStorage.removeItem('token');
-        yield put(setUser({ name: '', role: GUEST }));
+        yield put(setGuestUser());
     }
 }

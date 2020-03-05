@@ -6,6 +6,7 @@ export const USER_SIGNUP = 'USER_SIGNUP';
 export const REQUIRE_USER = 'REQUIRE_USER';
 export const READ_USER_API = 'READ_USER_API';
 export const SET_USER = 'SET_USER';
+export const SET_GUEST_USER = 'SET_GUEST_USER';
 export const CREATE_USER = 'CREATE_USER';
 
 export const USER_MODEL = 'user';
@@ -37,3 +38,4 @@ export const setUser = (user) => ({
     type: SET_USER,
     payload: user,
 });
+export const setGuestUser = (user) => ({ type: SET_GUEST_USER });

@@ -4,5 +4,5 @@ export const currentUser = (state) => {
 };
 export const currentUserRole = (state) => {
     const { Just: user } = state.user.currentUser;
-    return user.role || '';
+    return user ? user.role : '';
 };

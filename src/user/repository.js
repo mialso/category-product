@@ -1,10 +1,9 @@
 import { SUCCESS, FAIL } from 'app/remote/api';
 import {
     REQUIRE_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
-    readUserApi, userLoginApi, setUser,
+    readUserApi, userLoginApi, setUser, setGuestUser,
 } from './action';
 import { currentUser } from './selector';
-import { GUEST } from './constants';
 
 const TIMEOUT = 0;
 
@@ -19,19 +18,25 @@ export function withToken(dispatch, action) {
 
 export function userData({ dispatch, getState }, message) {
     switch (message.type) {
+        // (false, currentUser, REQUIRE_USER)
         case REQUIRE_USER: {
             const { user } = currentUser(getState());
             if (!user) {
                 const token = localStorage.getItem('token');
                 if (token) {
+                    // REQUIRE_USER causes READ_USER_API if (!user && token)
                     dispatch(readUserApi(token));
                 } else {
-                    dispatch(setUser({ name: '', role: GUEST }));
+                    // REQUIRE_USER causes SET_USER if (!user && !token)
+                    dispatch(setGuestUser());
                 }
             }
             break;
         }
+        // ({ true, GUEST }, { currentUser, currentUserRole }, USER_LOGIN)
         case USER_LOGIN: {
+            // TODO: if operation is not in progress???
+            // USER_LOGIN causes USER_LOGIN_API
             dispatch(userLoginApi(message.payload));
             break;
         }
@@ -47,7 +52,7 @@ export function userData({ dispatch, getState }, message) {
         case READ_USER_API + FAIL:
         case USER_LOGOUT: {
             localStorage.removeItem('token');
-            dispatch(setUser({ name: '', role: GUEST }));
+            dispatch(setGuestUser());
             break;
         }
         default: break;
