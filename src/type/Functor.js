@@ -5,9 +5,9 @@ export const Functor = {
         if (typeof getTransform !== 'function' || typeof getItem !== 'function') {
             throw new Error('Unable to applyF: some argument is not a function');
         }
-        const name = `${getTransform.name}_${getItem.name}`
+        const name = `${getTransform.name}_${getItem.name}`;
         const i = {
-            [name]: function(value) {
+            [name](value) {
                 return getTransform(value)(getItem(value));
             },
         };
@@ -17,7 +17,7 @@ export const Functor = {
     pureF(value) {
         const name = `pure(${value})`;
         const i = {
-            [name]: function () {
+            [name]() {
                 return value;
             },
         };
@@ -30,19 +30,17 @@ export const fmap = (func) => (item) => item.mapF(func);
 // similar to redux-js implementation
 export function compose(...funcs) {
     if (funcs.length === 0) {
-        return (arg) => arg
+        return (arg) => arg;
     }
 
     if (funcs.length === 1) {
-        return funcs[0]
+        return funcs[0];
     }
 
-    return funcs.reduce((a, b) => (...args) => a(b(...args)))
+    return funcs.reduce((a, b) => (...args) => a(b(...args)));
 }
 
-export const composeF = (...funcs) => (functor = {}) => {
-    return functor.mapF(compose(...funcs));
-}
+export const composeF = (...funcs) => (functor = {}) => functor.mapF(compose(...funcs));
 
 export function foldr() {
 }

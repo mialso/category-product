@@ -38,4 +38,4 @@ export const setUser = (user) => ({
     type: SET_USER,
     payload: user,
 });
-export const setGuestUser = (user) => ({ type: SET_GUEST_USER });
+export const setGuestUser = () => ({ type: SET_GUEST_USER });

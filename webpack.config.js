@@ -16,16 +16,8 @@ module.exports = {
                 use: [ MiniCssExtractPlugin.loader, 'css-loader' ],
             },
             {
-                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: 'dist/fonts/',
-                        },
-                    },
-                ],
+                test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+                type: 'asset',
             },
         ],
     },
@@ -41,7 +33,7 @@ module.exports = {
     },
     output: {
         path: `${__dirname}/dist`,
-        publicPath: '/',
+        publicPath: 'http://localhost:8080/',
         filename: 'bundle.js',
     },
     plugins: [
@@ -51,7 +43,9 @@ module.exports = {
         }),
     ],
     devServer: {
-        contentBase: './dist',
+        static: {
+            directory: './dist',
+        },
         hot: true,
         proxy: {
             '/api': 'http://localhost:5005',

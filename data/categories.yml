@@ -37,3 +37,4 @@ category: !!seq
     - !!map {name: rootcat, parentId: null, id: category_18, op: CREATE}
     - !!map {name: root2, parentId: null, id: category_19, op: CREATE}
     - !!map {name: root23, parentId: '', id: category_19, op: UPDATE}
+    - !!map {id: category_19, op: REMOVE}

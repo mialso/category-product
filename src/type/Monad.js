@@ -34,10 +34,8 @@ export const reduceM = (monad = {}) => (...items) => {
         },
         monad,
     );
-}
+};
 // ( a -> MonadClass b ) -> MonadClass a -> MonadClass b
-export const composeM = (...items) => (monad = {}) => {
-    return reduceM(monad)(...items.reverse());
-}
+export const composeM = (...items) => (monad = {}) => reduceM(monad)(...items.reverse());
 
-export const liftM = func => item => item.returnM(item.bindM(func));
+export const liftM = (func) => (item) => item.returnM(item.bindM(func));

@@ -2,14 +2,29 @@ import { Monad } from 'type/Monad';
 
 export const MAYBE = 'Maybe';
 
+export function Nothing() {
+    const maybe = Object.create(Maybe);
+    maybe.Nothing = true;
+    return Object.freeze(maybe);
+}
+
+export function Just(value) {
+    if (!value) {
+        return Nothing();
+    }
+    const maybe = Object.create(Maybe);
+    maybe.Just = Object.freeze(value);
+    return Object.freeze(maybe);
+}
+
 export const Maybe = {
     ...Monad,
-    ... {
+    ...{
         toString() {
             if (this.Just) {
                 return `Just ${JSON.stringify(this.Just)}`;
             }
-            return `Nothing`;
+            return 'Nothing';
         },
         // id morphism ???
         id() {
@@ -49,18 +64,3 @@ export const Maybe = {
         data: MAYBE,
     },
 };
-
-export function Just(value) {
-    if (!value) {
-        return Nothing();
-    }
-    const maybe = Object.create(Maybe);
-    maybe.Just = Object.freeze(value);
-    return Object.freeze(maybe);
-}
-
-export function Nothing() {
-    const maybe = Object.create(Maybe);
-    maybe.Nothing = true;
-    return Object.freeze(maybe);
-}

@@ -1,6 +1,5 @@
 import { put, take, select } from 'redux-saga/effects';
 import { SUCCESS, FAIL } from 'app/remote/api';
-import { ASKED, READY } from 'app/remote/constants';
 import {
     REQUIRE_USER, USER_LOGIN, USER_LOGIN_API, READ_USER_API, USER_LOGOUT,
     readUserApi, userLoginApi, setUser, setGuestUser,
@@ -29,7 +28,7 @@ export function* userSaga() {
                 // REQUIRE_USER causes READ_USER_API if (!user && token)
                 yield put(readUserApi(token));
 
-                const userDto = yield take([READ_USER_API + SUCCESS, READ_USER_API + FAIL]);
+                const userDto = yield take([ READ_USER_API + SUCCESS, READ_USER_API + FAIL ]);
                 if (!userDto.payload || userDto.error) {
                     localStorage.removeItem('token');
                     yield put(setGuestUser());
@@ -59,7 +58,7 @@ export function* userSaga() {
             }
         }
         // REGULAR
-        yield take(USER_LOGOUT)
+        yield take(USER_LOGOUT);
 
         localStorage.removeItem('token');
         yield put(setGuestUser());
