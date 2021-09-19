@@ -13,7 +13,7 @@ const modelFileMap = {
 };
 
 const getData = (modelName) => readFile(modelFileMap[modelName], 'utf8')
-    .then((data) => yaml.safeLoad(data)[modelName])
+    .then((data) => yaml.load(data)[modelName])
     .catch((e) => {
         const error = e.message;
         console.error(`unable to read storage data for model: [${modelName}]: ${error}`);
@@ -21,7 +21,7 @@ const getData = (modelName) => readFile(modelFileMap[modelName], 'utf8')
     });
 
 const addData = (modelName) => (data) => {
-    const yamlString = yaml.safeDump([ data ], { flowLevel: 1, lineWidth: ITEM_LIMIT })
+    const yamlString = yaml.dump([ data ], { flowLevel: 1, lineWidth: ITEM_LIMIT })
         .replace('-', '    - !!map');
     if (yamlString.length > (ITEM_LIMIT - 10)) {
         return Promise.reject(new Error(`[File Store]: add: [${modelName}]: unsupported item size`));

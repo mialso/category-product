@@ -57,3 +57,4 @@ product: !!seq
     - !!map {name: super mega star, price: 777, expireDate: 1586908800, id: product_13, op: CREATE}
     - !!map {name: super juice, price: 7, expireDate: 1587600000, id: product_6, op: UPDATE}
     - !!map {name: great meat, price: 49, expireDate: 1585267200, id: product_14, op: CREATE}
+    - !!map {name: your milk, price: 9, expireDate: 1632441600, id: product_15, op: CREATE}
