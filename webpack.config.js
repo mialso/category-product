@@ -1,9 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/app/index.js',
+    entry: {
+        app: './src/app/index.js',
+    },
     module: {
         rules: [
             {
@@ -33,20 +36,26 @@ module.exports = {
     },
     output: {
         path: `${__dirname}/dist`,
-        publicPath: 'http://localhost:8080/',
-        filename: 'bundle.js',
+        publicPath: '/',
+        filename: 'app.js',
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             filename: 'styles.css',
         }),
+        new HtmlWebpackPlugin({
+            template: './src/render/index.html',
+            inject: false,
+            filename: 'index.html',
+        }),
     ],
     devServer: {
         static: {
             directory: './dist',
         },
-        hot: true,
+        hot: false,
+        liveReload: false,
         proxy: {
             '/api': 'http://localhost:5005',
         },

@@ -11,5 +11,5 @@ export function render(store) {
         </Provider>,
         document.getElementById('app'),
     );
-    module.hot.accept();
+    // module.hot.accept();
 }

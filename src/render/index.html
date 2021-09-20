@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>products category</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script><%= htmlWebpackPlugin.files.js.reduce((acc, file) => (file === '/app.js' ? compilation.assets[file.substr(htmlWebpackPlugin.files.publicPath.length)].source() : acc), "")%></script>
+    </body>
+</html>

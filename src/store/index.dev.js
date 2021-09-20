@@ -5,7 +5,7 @@ import rootReducer from './reducers';
 import middlewares from './middleware';
 import { sagaMiddleware, rootSaga } from './sagas';
 
-export default function configureStore(initState) {
+export function configureStore(initState) {
     const items = [ ...middlewares, sagaMiddleware ];
     const middlewareEnhancer = applyMiddleware(...items);
     const composedEnhancers = composeWithDevTools(middlewareEnhancer);
