@@ -13,7 +13,6 @@ export function render(store) {
         </Provider>,
         getContainerElement(),
     );
-    // module.hot.accept();
     return () => {
         ReactDOM.unmountComponentAtNode(getContainerElement());
     };

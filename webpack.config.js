@@ -2,8 +2,12 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
+    mode: isDevelopment ? 'development' : 'production',
     entry: {
         app: './src/app/index.js',
     },
@@ -12,7 +16,12 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: [ 'babel-loader' ],
+                use: [{
+                    loader: require.resolve('babel-loader'),
+                    options: {
+                        plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+                    },
+                }],
             },
             {
                 test: /\.css$/i,
@@ -49,12 +58,13 @@ module.exports = {
             inject: false,
             filename: 'index.html',
         }),
-    ],
+        isDevelopment && new ReactRefreshWebpackPlugin(),
+    ].filter(Boolean),
     devServer: {
         static: {
             directory: './dist',
         },
-        hot: false,
+        hot: true,
         liveReload: false,
         proxy: {
             '/api': 'http://localhost:5005',
