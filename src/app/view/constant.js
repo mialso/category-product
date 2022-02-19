@@ -10,7 +10,7 @@ export const VIEW_BY_ID = {
     [OFFER_VIEW]: {
         id: OFFER_VIEW,
         name: 'Offer',
-    }
-}
+    },
+};
 
 export const VIEW_MODEL_ID = 'view';

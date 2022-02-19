@@ -51,11 +51,13 @@ export const updateItem = (item) => (state) => ({
     ...state,
     byId: { ...state.byId, [item.id]: item },
 });
-export const removeItem = (id) => (state) => ({
-    ...state,
-    ids: state.ids.filter((itemId) => itemId !== id),
-    byId: { ...state.byId, [id]: null },
-});
+export const removeItem = (id) => function (state) {
+    return {
+        ...state,
+        ids: state.ids.filter((itemId) => itemId !== id),
+        byId: { ...state.byId, [id]: null },
+    };
+};
 export const removeRelations = (id) => (state) => ({
     ...state,
     byProductId: Object.keys(state.byProductId).reduce(

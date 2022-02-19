@@ -10,7 +10,6 @@ function loadApp() {
     const storeChunk = import('../store/index.dev');
 
     // TODO: try fetch initial data as well
-
     Promise.all([ uiChunk, storeChunk ])
         .then(arrayToArgs(runApp));
 }

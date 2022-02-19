@@ -20,8 +20,8 @@ export const viewReducer = (state = initialState, action) => {
                 return state;
             }
 
-            return { ...state, currentId: nextView.id }
+            return { ...state, currentId: nextView.id };
         }
         default: return state;
     }
-}
+};
