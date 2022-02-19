@@ -1,0 +1,10 @@
+.OfferPreview {
+    display: flex;
+    gap: 2em;
+    margin: 2em;
+}
+
+.PreviewConfig {
+    display: flex;
+    flex-direction: column;
+}
