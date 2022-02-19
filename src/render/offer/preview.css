@@ -8,3 +8,8 @@
     display: flex;
     flex-direction: column;
 }
+
+.Preview {
+    width: 500px;
+    height: 500px;
+}

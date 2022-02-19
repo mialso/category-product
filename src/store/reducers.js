@@ -7,6 +7,7 @@ import { modalReducer } from 'app/modal';
 import { errorReducer } from 'app/error';
 import { formReducer } from 'app/form/reducer';
 import { VIEW_MODEL_ID, viewReducer } from 'app/view/reducer';
+import { OFFER_MODEL_ID, offerReducer } from 'offer/reducer';
 
 export default combineReducers({
     api: apiReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
     product: productReducer,
     form: formReducer,
     [VIEW_MODEL_ID]: viewReducer,
+    [OFFER_MODEL_ID]: offerReducer,
 });

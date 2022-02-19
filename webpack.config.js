@@ -19,7 +19,9 @@ module.exports = {
                 use: [{
                     loader: require.resolve('babel-loader'),
                     options: {
-                        plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+                        plugins: [
+                            // isDevelopment && require.resolve('react-refresh/babel'),
+                        ].filter(Boolean),
                     },
                 }],
             },
@@ -39,8 +41,17 @@ module.exports = {
             user: path.resolve(__dirname, './src/user'),
             category: path.resolve(__dirname, './src/category'),
             product: path.resolve(__dirname, './src/product'),
+            offer: path.resolve(__dirname, './src/offer'),
             app: path.resolve(__dirname, './src/app'),
             type: path.resolve(__dirname, './src/type'),
+        },
+        fallback: {
+            process: require.resolve('process/browser'),
+            zlib: require.resolve('browserify-zlib'),
+            stream: require.resolve('stream-browserify'),
+            util: require.resolve('util'),
+            buffer: require.resolve('buffer'),
+            asset: require.resolve('assert'),
         },
     },
     output: {
@@ -58,13 +69,17 @@ module.exports = {
             inject: false,
             filename: 'index.html',
         }),
-        isDevelopment && new ReactRefreshWebpackPlugin(),
+        // isDevelopment && new ReactRefreshWebpackPlugin({ exclude: /\.render\/offer\/preview.jsx$/ }),
+        new webpack.ProvidePlugin({
+            Buffer: [ 'buffer', 'Buffer' ],
+            process: 'process/browser',
+        }),
     ].filter(Boolean),
     devServer: {
         static: {
             directory: './dist',
         },
-        hot: true,
+        hot: false,
         liveReload: false,
         proxy: {
             '/api': 'http://localhost:5005',

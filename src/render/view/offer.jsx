@@ -7,7 +7,7 @@ import { ClientPicker } from '../offer/client';
 import { GreetingPicker } from '../offer/greeting';
 
 const HeadStep = () => (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <TitlePicker />
         <ClientPicker />
         <GreetingPicker />
