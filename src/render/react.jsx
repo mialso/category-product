@@ -4,12 +4,17 @@ import { Provider } from 'react-redux';
 
 import { App } from './app';
 
+const getContainerElement = () => document.getElementById('app');
+
 export function render(store) {
     ReactDOM.render(
         <Provider store={store}>
             <App />
         </Provider>,
-        document.getElementById('app'),
+        getContainerElement(),
     );
     // module.hot.accept();
+    return () => {
+        ReactDOM.unmountComponentAtNode(getContainerElement());
+    };
 }

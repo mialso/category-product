@@ -1,0 +1,54 @@
+user:
+  - open browser url # URL
+  - browser:
+    - call server for src/render/index.html # ?depends on URL, ?cache?
+    - parse html, render
+    - run inline script:
+      - app inline script:
+        - set window onload handler
+app:
+  src/app/index.js:
+    loadApp:
+      - src/render/react: render
+      - src/store/index.dev: configureStore
+      - call:
+        - set uiChunk as src/render/react import promise
+        - set storeChunk as src/store/index.dev import promise
+        - run promise for both uiChunk and storeChunk to be resolved
+        - set runApp on both uiChunk and storeChunk resolve success
+    runApp:
+      - set appStore as result of store.configureStore run with empty object
+      - run ui.render with appStore
+events:
+  - app loading:
+    - spinner mounted
+  - store loaded
+  - ui loaded
+  - app loaded:
+    - store ready:
+      - ui mounted
+      - spinner unmounted
+  - app active
+  - app unmounted
+actions:
+  - src/render/index.html created:
+    - html markup added
+    - webpack html plugin inline script parser added
+  - src/app/index.js created:
+    - runApp function added
+    - loadApp function added
+    - window.onload handler set as loadApp
+  - src/render/react.js created:
+    - render function added
+  - src/store/index.dev created:
+    - createStore function added
+  - client build (webpack):
+    - config created
+    - dev server started:
+      - build success
+  - rest api server:
+    - server/index.js created
+    - node server started:
+      - category set success
+      - product set success
+      - productCategories set success

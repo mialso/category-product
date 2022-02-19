@@ -36,5 +36,6 @@ category: !!seq
     - !!map {name: diary, parentId: category_2, id: category_13, op: UPDATE}
     - !!map {name: rootcat, parentId: null, id: category_18, op: CREATE}
     - !!map {name: root2, parentId: null, id: category_19, op: CREATE}
-    - !!map {name: root23, parentId: '', id: category_19, op: UPDATE}
+    - !!map {name: root23, parentId: '', id: category_19, op: UPDATE} # bug null->''
     - !!map {id: category_19, op: REMOVE}
+    - !!map {name: rootcatt, parentId: '', id: category_18, op: UPDATE}

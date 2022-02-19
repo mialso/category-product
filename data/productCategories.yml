@@ -46,3 +46,4 @@ productCategories: !!seq
     - !!map {productId: product_6, categoryIds: [], op: UPDATE}
     - !!map {productId: product_14, categoryIds: [category_10, category_16], op: CREATE}
     - !!map {productId: product_15, categoryIds: [category_9, category_13], op: CREATE}
+    - !!map {productId: product_10, categoryIds: [category_10, category_16], op: UPDATE}
