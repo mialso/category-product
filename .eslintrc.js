@@ -19,5 +19,7 @@ module.exports = {
         "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }],
         "jsx-a11y/label-has-associated-control": "off",
         "react/prop-types": "off",
+        "react/function-component-definition": ["warn", { "namedComponents": "arrow-function" }],
+
     },
 };

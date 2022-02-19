@@ -7,7 +7,7 @@ import './picker.css';
 
 export const ViewButtonRaw = ({ name, onClick, isDisabled }) => (
     <button type="button" onClick={onClick} disabled={isDisabled}>{name}</button>
-)
+);
 
 export const ViewButton = connect(
     (state, { id }) => ({
@@ -19,12 +19,11 @@ export const ViewButton = connect(
     }),
 )(ViewButtonRaw);
 
-
 export const ViewPickerRaw = ({ ids }) => (
     <div className="ViewPicker">
         { ids.map((id) => <ViewButton key={id} id={id} />) }
     </div>
-)
+);
 
 export const ViewPicker = connect(
     (state) => ({

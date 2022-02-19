@@ -28,10 +28,12 @@ export const App = () => (
             </div>
             <RegisteredUser>
                 <div className="App-Content">
-                    <ViewSwitch views={{
-                        [CATEGORY_PRODUCT_VIEW]: CategoryProductView,
-                        [OFFER_VIEW]: OfferView,
-                    }} />
+                    <ViewSwitch
+                        views={{
+                            [CATEGORY_PRODUCT_VIEW]: CategoryProductView,
+                            [OFFER_VIEW]: OfferView,
+                        }}
+                    />
                 </div>
                 <Modal>
                     <CategoryEditor />

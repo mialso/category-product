@@ -26,27 +26,25 @@ export const Login = ({ runUserLogin }) => {
                 disabled={!name}
                 onClick={() => runUserLogin(name)}
             >
-               Login
+                Login
             </button>
         </div>
     );
 };
 
-export const Menu = ({ user, runUserLogout }) => {
-    return (
-        <div className="UserMenu">
-            <span>Content for:</span>
-            <b>{user.name}</b>
-            <button
-                className="UserMenu-Logout AppButton"
-                type="button"
-                onClick={() => runUserLogout()}
-            >
-                Logout
-            </button>
-        </div>
-    );
-};
+export const Menu = ({ user, runUserLogout }) => (
+    <div className="UserMenu">
+        <span>Content for:</span>
+        <b>{user.name}</b>
+        <button
+            className="UserMenu-Logout AppButton"
+            type="button"
+            onClick={() => runUserLogout()}
+        >
+            Logout
+        </button>
+    </div>
+);
 
 export const UserLogin = compose(
     withGuestUser,
