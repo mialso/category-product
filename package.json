@@ -8,6 +8,7 @@
     "start:server": "node server/index.js",
     "lint": "eslint --ext js,jsx src/",
     "lint:fix": "eslint --ext js,jsx --fix src/",
+    "dep:js-graph": "madge --image docs/dep_graph.svg --exclude '.css$' src/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "mialso",
@@ -39,6 +40,7 @@
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "html-webpack-plugin": "5.5.0",
+    "madge": "5.0.1",
     "mini-css-extract-plugin": "2.5.3",
     "react-hot-loader": "4.13.00",
     "webpack": "5.69.1",
